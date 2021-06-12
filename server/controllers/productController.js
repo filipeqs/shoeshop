@@ -8,7 +8,7 @@ const sorts = {
 };
 
 // @desc    Fetch all Products
-// @route   GET /api/products?pageNumber='number'&sortBy='sorts'
+// @route   GET /api/products?pageNumber=1&sortBy=rating&brand=adidas&keyword=brand
 // @access  Public
 const getProducts = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ const getProducts = async (req, res) => {
 
         const keyword = req.query.keyword
             ? {
-                  name: {
+                  brand: {
                       $regex: req.query.keyword,
                       $options: 'i',
                   },
@@ -38,4 +38,22 @@ const getProducts = async (req, res) => {
     }
 };
 
-module.exports = { getProducts };
+// @desc    Fetch product by id
+// @route   GET /api/:id
+// @access  Public
+const getProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).send({ message: 'Product not found!' });
+        }
+
+        return res.send(product);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(400).send({ message: error.message });
+    }
+};
+
+module.exports = { getProducts, getProductById };

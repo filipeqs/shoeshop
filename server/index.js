@@ -1,13 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
-const connectDb = require('./config/db');
+const connectDB = require('./config/db');
 
 const productRoutes = require('./routes/productRoutes');
 
 dotenv.config();
 
-connectDb();
+connectDB();
 
 const app = express();
 

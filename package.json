@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start": "node server/index",
-        "server": "nodemon server/index"
+        "server": "nodemon server/index",
+        "data:import": "node server/config/seeder",
+        "data:destroy": "node server/config/seeder -d"
     },
     "author": "",
     "license": "ISC",

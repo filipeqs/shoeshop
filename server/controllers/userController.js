@@ -1,5 +1,5 @@
 const User = require('../models/userModel');
-const { BadRequest } = require('../utils/errors');
+const { BadRequest, NotFound } = require('../utils/errors');
 const generateToken = require('../utils/generateToken');
 
 // @desc    Login User
@@ -13,7 +13,7 @@ const authUser = async (req, res, next) => {
         if (!user) throw new BadRequest('Invalid email or password');
 
         if (user && (await user.matchPassword(password))) {
-            return res.send({
+            return res.json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -67,10 +67,60 @@ const registerUser = async (req, res, next) => {
 // @access  Private
 const getUserProfile = async (req, res, next) => {
     try {
-        return res.send(req.user);
+        return res.json(req.user);
     } catch (error) {
         next(error);
     }
 };
 
-module.exports = { registerUser, authUser, getUserProfile };
+const deleteUser = async (id, next) => {
+    const user = await User.findById(id);
+    if (!user) throw new NotFound('User not found!');
+
+    await user.remove();
+};
+
+// @desc    Delete Logged in User
+// @route   DELETE api/users/profile
+// @access  Private
+const deleteMyProfile = async (req, res, next) => {
+    try {
+        await deleteUser(req.user._id);
+        return res.json({ message: 'User removed!' });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Delete User by Id
+// @route   DELETE api/users/:id
+// @access  Private/Admin
+const deleteUserById = async (req, res, next) => {
+    try {
+        await deleteUser(req.params.id, next);
+        return res.json({ message: 'User removed!' });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get all Users
+// @route   Get api/users
+// @access  Private/Admin
+const getAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find();
+        return res.json(users);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    registerUser,
+    authUser,
+    getUserProfile,
+    deleteMyProfile,
+    deleteUserById,
+    getAllUsers,
+};

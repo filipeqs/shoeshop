@@ -15,6 +15,8 @@ const protect = async (req, res, next) => {
 
                 req.user = await User.findById(decoded.id).select('-password');
 
+                if (!req.user) throw new BadRequest('Not authorized, token failed');
+
                 next();
             } catch (error) {
                 throw new BadRequest('Not authorized, token failed');
@@ -29,4 +31,13 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+const admin = async (req, res, next) => {
+    try {
+        if (req.user && req.user.isAdmin) next();
+        else throw new BadRequest('Not authorized as admin');
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { protect, admin };

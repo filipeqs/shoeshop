@@ -62,4 +62,15 @@ const registerUser = async (req, res, next) => {
     }
 };
 
-module.exports = { registerUser, authUser };
+// @desc    Get Logged in User Profile
+// @route   POST api/users/profile
+// @access  Private
+const getUserProfile = async (req, res, next) => {
+    try {
+        return res.send(req.user);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { registerUser, authUser, getUserProfile };

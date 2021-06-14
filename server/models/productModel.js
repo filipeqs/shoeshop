@@ -4,20 +4,20 @@ const reviewSchema = mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: [true, 'User is required!'],
             ref: 'User',
         },
         name: {
             type: String,
-            required: true,
+            required: [true, 'Name is required!'],
         },
         rating: {
             type: Number,
-            required: true,
+            required: [true, 'Rating is required!'],
         },
         comment: {
             type: String,
-            required: true,
+            required: [true, 'Comment is required!'],
         },
     },
     {
@@ -29,51 +29,49 @@ const productSchema = mongoose.Schema(
     {
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: [true, 'User is required!'],
             ref: 'User',
         },
         name: {
             type: String,
-            required: true,
+            required: [true, 'Name is required!'],
         },
         image: {
             type: String,
-            required: true,
+            required: [true, 'Image is required!'],
         },
         brand: {
             type: String,
-            required: true,
+            required: [true, 'Brand is required!'],
         },
         description: {
             type: String,
-            required: true,
+            required: [true, 'Description is required!'],
         },
         reviews: [reviewSchema],
         rating: {
             type: Number,
-            required: true,
             default: 0,
         },
         numReviews: {
             type: Number,
-            required: true,
             default: 0,
         },
         price: {
             type: Number,
-            required: true,
+            required: [true, 'Price is required!'],
             default: 0,
         },
         stock: [
             {
                 count: {
                     type: Number,
-                    require: true,
+                    require: [true, 'Count in stock is required!'],
                     default: 0,
                 },
                 size: {
                     type: Number,
-                    required: true,
+                    required: [true, 'Size is required!'],
                 },
             },
         ],

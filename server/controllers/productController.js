@@ -38,8 +38,8 @@ const getProducts = async (req, res, next) => {
     }
 };
 
-// @desc    Fetch product by id
-// @route   GET /api/:id
+// @desc    Fetch Product by id
+// @route   GET /api/products/:id
 // @access  Public
 const getProductById = async (req, res, next) => {
     try {
@@ -53,4 +53,27 @@ const getProductById = async (req, res, next) => {
     }
 };
 
-module.exports = { getProducts, getProductById };
+// @desc    Create new Product
+// @route   POST api/products
+// @access  Private
+const createProduct = async (req, res, next) => {
+    try {
+        const { name, brand, description, image, price, stock } = req.body;
+
+        const product = await Product.create({
+            name,
+            brand,
+            description,
+            image,
+            price,
+            stock,
+            user: req.user._id,
+        });
+
+        return res.status(200).json(product);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { getProducts, getProductById, createProduct };

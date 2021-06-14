@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const connectDB = require('./config/db');
-const errorHandler = require('./middleware/errorHandler');
+const errorHandler = require('./middleware/errorMiddleware');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 

@@ -73,7 +73,51 @@ const getUserProfile = async (req, res, next) => {
     }
 };
 
-const deleteUser = async (id, next) => {
+// @desc    Get all Users
+// @route   Get api/users
+// @access  Private/Admin
+const getAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find();
+        return res.json(users);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updateUser = async (newValues, userId) => {
+    const { name, email, password, isAdmin } = newValues;
+
+    const user = await User.findById(userId);
+    if (!user) throw new NotFound('User not found!');
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (password) user.password = password;
+    if (user.isAdmin && isAdmin !== undefined) user.isAdmin = isAdmin;
+
+    return await user.save();
+};
+
+// @desc    Update Logged in User
+// @route   PUT api/users/profile
+// @access  Private
+const updateMyProfile = async (req, res, next) => {
+    try {
+        const updatedUser = await updateUser(req.body, req.user._id);
+
+        return res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteUser = async (id) => {
     const user = await User.findById(id);
     if (!user) throw new NotFound('User not found!');
 
@@ -97,20 +141,8 @@ const deleteMyProfile = async (req, res, next) => {
 // @access  Private/Admin
 const deleteUserById = async (req, res, next) => {
     try {
-        await deleteUser(req.params.id, next);
+        await deleteUser(req.params.id);
         return res.json({ message: 'User removed!' });
-    } catch (error) {
-        next(error);
-    }
-};
-
-// @desc    Get all Users
-// @route   Get api/users
-// @access  Private/Admin
-const getAllUsers = async (req, res, next) => {
-    try {
-        const users = await User.find();
-        return res.json(users);
     } catch (error) {
         next(error);
     }
@@ -123,4 +155,5 @@ module.exports = {
     deleteMyProfile,
     deleteUserById,
     getAllUsers,
+    updateMyProfile,
 };

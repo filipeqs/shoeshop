@@ -6,6 +6,7 @@ const {
     deleteMyProfile,
     deleteUserById,
     getAllUsers,
+    updateMyProfile,
 } = require('../controllers/userController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -15,7 +16,11 @@ router.route('/').get(protect, admin, getAllUsers).post(registerUser);
 
 router.route('/:id').delete(protect, admin, deleteUserById);
 
-router.route('/profile').get(protect, getUserProfile).delete(protect, deleteMyProfile);
+router
+    .route('/profile')
+    .get(protect, getUserProfile)
+    .put(protect, updateMyProfile)
+    .delete(protect, deleteMyProfile);
 
 router.route('/login').post(authUser);
 

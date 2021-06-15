@@ -85,26 +85,49 @@ const getAllUsers = async (req, res, next) => {
     }
 };
 
-const updateUser = async (newValues, userId) => {
-    const { name, email, password, isAdmin } = newValues;
-
-    const user = await User.findById(userId);
-    if (!user) throw new NotFound('User not found!');
-
-    if (name) user.name = name;
-    if (email) user.email = email;
-    if (password) user.password = password;
-    if (user.isAdmin && isAdmin !== undefined) user.isAdmin = isAdmin;
-
-    return await user.save();
-};
-
 // @desc    Update Logged in User
 // @route   PUT api/users/profile
 // @access  Private
 const updateMyProfile = async (req, res, next) => {
     try {
-        const updatedUser = await updateUser(req.body, req.user._id);
+        const { name, email, password } = req.body;
+
+        const user = await User.findById(req.user._id);
+        if (!user) throw new NotFound('User not found!');
+
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (password) user.password = password;
+
+        const updatedUser = await user.save();
+
+        return res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Update User by ID
+// @route   PUT api/users/:id
+// @access  Private/Admin
+const updateUserById = async (req, res, next) => {
+    try {
+        const { name, email, password, isAdmin } = req.body;
+
+        const user = await User.findById(req.params.id);
+        if (!user) throw new NotFound('User not found!');
+
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (password) user.password = password;
+        if (req.user.isAdmin && isAdmin !== undefined) user.isAdmin = isAdmin;
+
+        const updatedUser = await user.save();
 
         return res.json({
             _id: updatedUser._id,
@@ -156,4 +179,5 @@ module.exports = {
     deleteUserById,
     getAllUsers,
     updateMyProfile,
+    updateUserById,
 };

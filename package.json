@@ -6,6 +6,8 @@
     "scripts": {
         "start": "node server/index",
         "server": "nodemon server/index",
+        "client": "npm start --prefix client",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
         "data:import": "node server/config/seeder",
         "data:destroy": "node server/config/seeder -d"
     },
@@ -20,6 +22,7 @@
         "mongoose": "^5.12.13"
     },
     "devDependencies": {
+        "concurrently": "^6.2.0",
         "nodemon": "^2.0.7"
     }
 }

@@ -5,12 +5,12 @@ const errorHandler = (err, req, res, next) => {
 
     if (err instanceof GeneralError) {
         return res.status(err.getCode()).json({
-            error: err.message,
+            message: err.message,
         });
     }
 
     return res.status(500).json({
-        error: err.message,
+        message: err.message,
     });
 };
 

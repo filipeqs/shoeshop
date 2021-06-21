@@ -2,6 +2,7 @@ import {
     PRODUCT_LIST_REQUEST,
     PRODUCT_LIST_SUCCESS,
     PRODUCT_LIST_FAIL,
+    PRODUCT_LIST_RESET,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -10,21 +11,30 @@ export const productListReducer = (state = { loading: true, products: [] }, acti
     switch (type) {
         case PRODUCT_LIST_REQUEST:
             return {
+                ...state,
                 loading: true,
-                products: [],
             };
         case PRODUCT_LIST_SUCCESS:
             return {
+                ...state,
                 loading: false,
-                products: payload.products,
+                products: [...state.products, ...payload.products],
                 pages: payload.pages,
                 page: payload.page,
             };
         case PRODUCT_LIST_FAIL:
             return {
+                ...state,
                 loading: false,
                 products: [],
                 error: payload,
+            };
+        case PRODUCT_LIST_RESET:
+            return {
+                ...state,
+                loading: true,
+                products: [],
+                error: null,
             };
         default:
             return state;

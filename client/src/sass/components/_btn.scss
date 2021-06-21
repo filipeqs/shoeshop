@@ -1,0 +1,17 @@
+.btn {
+    border: none;
+    padding: 1.5rem 3rem;
+    outline: none;
+    color: white;
+    background-color: rgb(45, 41, 38);
+    cursor: pointer;
+    font-size: $default-font-size;
+
+    &:hover {
+        background-color: lighten(rgb(45, 41, 38), 5%);
+    }
+
+    &--round {
+        border-radius: 5rem;
+    }
+}

@@ -1,8 +1,21 @@
-.products-container {
-    padding: 0 30px;
+.products {
+    padding: 0 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
+    &-container {
+        margin-bottom: 1rem;
+    }
+
+    &__btn {
+        &-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+    }
 }
 
 .product {

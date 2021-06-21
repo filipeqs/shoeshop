@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loader from '../components/Loader';
@@ -22,7 +22,7 @@ const HomeScreen = () => {
         return () => {
             dispatch(resetProducts());
         };
-    }, []);
+    }, [dispatch]);
 
     const loadMore = () => {
         setPageNumber(pageNumber + 1);
@@ -32,14 +32,18 @@ const HomeScreen = () => {
     return loading && firstLoad ? (
         <Loader />
     ) : (
-        <Fragment>
-            <div className="products-container">
+        <div className="products-container">
+            <div className="products">
                 {products.map((product) => (
                     <Product product={product} key={product._id} />
                 ))}
             </div>
-            <button onClick={loadMore}>Load More</button>
-        </Fragment>
+            <div className="products__btn-container">
+                <button onClick={loadMore} className="btn btn--round text-uppercase">
+                    Load More
+                </button>
+            </div>
+        </div>
     );
 };
 

@@ -34,15 +34,6 @@
             margin-left: 3rem;
         }
 
-        &:hover,
-        &:focus {
-            color: #000000;
-
-            &::after {
-                transform: scaleX(1);
-            }
-        }
-
         &::after {
             content: '';
             display: block;
@@ -55,6 +46,13 @@
             transform: scaleX(0);
             transition: transform 0.15s ease-in 0s;
             z-index: 1;
+        }
+
+        &:hover,
+        &:focus {
+            &::after {
+                transform: scaleX(1);
+            }
         }
     }
 

@@ -1,0 +1,23 @@
+.products-container {
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product {
+    &-container {
+        width: 24%;
+        margin: 1rem 0;
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+
+        &-link {
+            display: block;
+            background-color: whitesmoke;
+        }
+    }
+}

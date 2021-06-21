@@ -1,13 +1,15 @@
 import Header from './layout/Header';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Home from './pages/Home';
+import HomeScreen from './pages/HomeScreen';
 
 const App = () => {
     return (
         <Router>
             <Header />
-            <Route exact path="/" component={Home} />
+            <div className="container">
+                <Route exact path="/" component={HomeScreen} />
+            </div>
         </Router>
     );
 };

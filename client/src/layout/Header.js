@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,9 +18,15 @@ const Header = () => {
                 </a>
             </div>
             <div className="header-right">
-                <FontAwesomeIcon icon={faSearch} className="header__icon" />
-                <FontAwesomeIcon icon={faUser} className="header__icon" />
-                <FontAwesomeIcon icon={faShoppingBag} className="header__icon" />
+                <NavLink to="/seach" activeClassName="header__icon-link--active" className="header__icon-link" >
+                    <FontAwesomeIcon icon={faSearch} className="header__icon" />
+                </NavLink>
+                <NavLink to="/login" activeClassName="header__icon-link--active" className="header__icon-link" >
+                    <FontAwesomeIcon icon={faUser} className="header__icon" />
+                </NavLink>
+                <NavLink to="/cart" activeClassName="header__icon-link--active" className="header__icon-link">
+                    <FontAwesomeIcon icon={faShoppingBag} className="header__icon" />
+                </NavLink>
             </div>
         </header>
     );

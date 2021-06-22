@@ -60,16 +60,26 @@
         }
     }
 
-    &__icon {
-        color: #000000;
-        padding: 1.5rem;
-        cursor: pointer;
-        height: 100% !important;
-        width: 5rem !important;
-        transition: all 0.2s ease-in;
+    &__icon{
+        font-size: 2rem;
 
-        &:hover {
-            background-color: #e4e4e4;
+        &-link {
+            color: #000000;
+            cursor: pointer;
+            height: 100% !important;
+            width: 5rem !important;
+            transition: all 0.2s ease-in;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            &:hover {
+                background-color: #e4e4e4;
+            }
+
+            &--active {
+                background-color: #e4e4e4;
+            }
         }
     }
 }

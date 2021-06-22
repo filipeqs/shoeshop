@@ -39,7 +39,7 @@ const HomeScreen = () => {
                 ))}
             </div>
             <div className="products__btn-container">
-                <button onClick={loadMore} className="btn btn--round text-uppercase">
+                <button onClick={loadMore} className="btn btn__black btn--round text-uppercase">
                     Load More
                 </button>
             </div>

@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 
+import Alert from '../components/Alert';
+
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
@@ -9,7 +11,8 @@ const LoginScreen = () => {
     return (
         <div className="auth-container">
             <div className="auth-wrapper">
-                <h1 className="auth-title">Sign In</h1>
+                <h1 className="auth-title mb-1">Sign In</h1>
+                <Alert variant="danger">Name is required!</Alert>
                 <form className="auth__form">
                     <div className="form-group">
                         <label className="form-label" hidden>Email Address</label>

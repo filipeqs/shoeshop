@@ -3,7 +3,7 @@ const products = [
         name: 'Adidas 1',
         image: '/images/adidas-1.png',
         description: 'Adidas Shoes 1',
-        brand: 'Adidas',
+        brand: 'adidas',
         price: 89.99,
         stock: [
             {
@@ -26,7 +26,7 @@ const products = [
         name: 'Adidas 2',
         image: '/images/adidas-2.png',
         description: 'Adidas Shoes 2',
-        brand: 'Adidas',
+        brand: 'adidas',
         price: 89.99,
         stock: [
             {
@@ -45,7 +45,7 @@ const products = [
         name: 'Adidas 3',
         image: '/images/adidas-3.png',
         description: 'Adidas Shoes 3',
-        brand: 'Adidas',
+        brand: 'adidas',
         price: 89.99,
         stock: [
             {
@@ -64,7 +64,7 @@ const products = [
         name: 'Adidas 4',
         image: '/images/adidas-4.png',
         description: 'Adidas Shoes 4',
-        brand: 'Adidas',
+        brand: 'adidas',
         price: 89.99,
         stock: [
             {

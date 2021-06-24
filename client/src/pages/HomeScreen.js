@@ -34,7 +34,7 @@ const HomeScreen = () => {
         <Loader />
     ) : (
         <div className="products-container">
-            {error && <Alert>{error}</Alert>}
+            {error && <Alert variant="danger">{error}</Alert>}
             <div className="products">
                 {products.map((product) => (
                     <Product product={product} key={product._id} />

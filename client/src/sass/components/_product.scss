@@ -1,6 +1,12 @@
 .products {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 10rem;
+
+    @include respond(tab-port) {
+        padding: 0 2rem;
+    }
 
     &__btn {
         &-container {
@@ -12,17 +18,17 @@
     }
 }
 
-.product {
+.product {    
     &-container {
-        width: 24%;
-        margin: 1rem 0.5rem;
+        width: 20.5%;
+        margin: 2rem 2rem;
 
         @include respond(tab-land) {
-            width: 32%;
+            width: 43%;
         }
 
         @include respond(tab-port) {
-            width: 48%;
+            width: 50%;
         }
 
         @include respond(phone) {
@@ -30,13 +36,55 @@
         }
     }
 
+    &__link {
+        display: block;
+        text-decoration: none;
+        color: $color-primary;
+    }
+
     &__img {
         display: block;
         width: 100%;
 
-        &-link {
-            display: block;
+        &-container {
             background-color: whitesmoke;
         }
     }
+
+    &__description {
+        position: relative;
+        overflow: hidden;
+        min-height: 45px;
+
+        h3 {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &__top {
+        position: relative;
+        animation-name: moveFomTop;
+        animation-duration: .2s;
+    }
+
+    &__action {
+        position: relative;
+        animation-name: moveFomBottom;
+        animation-duration: .2s;
+    }
+
+    &__brand {
+        opacity: .7;
+    }
+}
+
+@keyframes moveFomTop {
+    from {top: -100px;}
+    to {top: 0;}
+}
+
+@keyframes moveFomBottom {
+    from {top: 100px;}
+    to {top: 0;}
 }

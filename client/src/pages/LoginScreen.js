@@ -1,19 +1,33 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 
 import Alert from '../components/Alert';
+import Loader from '../components/Loader';
+
+import {login} from '../redux/actions/userActions'
 
 const LoginScreen = () => {
+    const dispatch = useDispatch()
+
+    const userInfo = useSelector((state) => state.userInfo);
+    const { loading, error } = userInfo
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault()
+        dispatch(login(email, password))
+    }
 
     return (
         <div className="auth-container">
             <div className="auth-wrapper">
                 <h1 className="auth-title mb-1">Sign In</h1>
-                <Alert variant="danger">Name is required!</Alert>
-                <form className="auth__form">
+                {loading && <Loader />}
+                {error && <Alert variant="danger">{error}</Alert>}
+                <form onSubmit={handleFormSubmit} className="auth__form">
                     <div className="form-group">
                         <label className="form-label" hidden>Email Address</label>
                         <FontAwesomeIcon icon={faUser} className="form-icon" />
@@ -22,6 +36,7 @@ const LoginScreen = () => {
                             type="email" 
                             placeholder="Enter Email" 
                             value={email} 
+                            required
                             onChange={(e) => setEmail(e.target.value)} 
                         />
                     </div>
@@ -33,6 +48,7 @@ const LoginScreen = () => {
                             type="password" 
                             placeholder="Enter Password" 
                             value={password} 
+                            required
                             onChange={(e) => setPassword(e.target.value)} 
                         />
                     </div>

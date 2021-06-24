@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Alert from '../components/Alert';
 
 import Loader from '../components/Loader';
 import Product from '../components/Product';
@@ -33,15 +34,16 @@ const HomeScreen = () => {
         <Loader />
     ) : (
         <div className="products-container">
+            {error && <Alert>{error}</Alert>}
             <div className="products">
                 {products.map((product) => (
                     <Product product={product} key={product._id} />
                 ))}
             </div>
             <div className="products__btn-container">
-                <button onClick={loadMore} className="btn btn__black btn--round text-uppercase">
+                {page < pages && <button onClick={loadMore} className="btn btn__black btn--round text-uppercase">
                     Load More
-                </button>
+                </button>}
             </div>
         </div>
     );

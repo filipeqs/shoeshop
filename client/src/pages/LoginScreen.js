@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faUser, faKey } from '@fortawesome/free-solid-svg-icons';
@@ -8,13 +8,21 @@ import Loader from '../components/Loader';
 
 import {login} from '../redux/actions/userActions'
 
-const LoginScreen = () => {
+const LoginScreen = ({ history, location }) => {
     const dispatch = useDispatch()
 
-    const userInfo = useSelector((state) => state.userInfo);
-    const { loading, error } = userInfo
+    const userLogin = useSelector((state) => state.userLogin);
+    const { loading, error, userInfo } = userLogin
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const redirect = location.search ? location.search.split('=')[1] : '/';
+
+    useEffect(() => {
+        if (userInfo)
+            history.push(redirect)
+    }, [history, userInfo, redirect])
 
     const handleFormSubmit = (e) => {
         e.preventDefault()

@@ -4,9 +4,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { productListReducer } from './reducers/productReducers';
 import { userLoginReducer } from './reducers/userReducers';
 
-const reducer = combineReducers({ 
+const reducer = combineReducers({
     productList: productListReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
 });
 
 const middleware = [thunk];

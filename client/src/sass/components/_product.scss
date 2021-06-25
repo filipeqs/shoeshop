@@ -18,7 +18,7 @@
     }
 }
 
-.product {    
+.product {
     &-container {
         width: 20.5%;
         margin: 2rem 2rem;
@@ -65,26 +65,34 @@
     &__top {
         position: relative;
         animation-name: moveFomTop;
-        animation-duration: .2s;
+        animation-duration: 0.2s;
     }
 
     &__action {
         position: relative;
         animation-name: moveFomBottom;
-        animation-duration: .2s;
+        animation-duration: 0.2s;
     }
 
     &__brand {
-        opacity: .7;
+        opacity: 0.7;
     }
 }
 
 @keyframes moveFomTop {
-    from {top: -100px;}
-    to {top: 0;}
+    from {
+        top: -100px;
+    }
+    to {
+        top: 0;
+    }
 }
 
 @keyframes moveFomBottom {
-    from {top: 100px;}
-    to {top: 0;}
+    from {
+        top: 100px;
+    }
+    to {
+        top: 0;
+    }
 }

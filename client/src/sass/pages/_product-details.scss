@@ -1,11 +1,20 @@
 .product-details {
     &-container {
         padding: 2rem 100px;
+
+        @include respond(tab-land) {
+            padding: 2rem 15px;
+        }
     }
 
     &-wrapper {
         display: flex;
         justify-content: space-around;
+
+        @include respond(tab-port) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     &__image {
@@ -14,6 +23,10 @@
         &-container {
             width: 50%;
             background-color: whitesmoke;
+
+            @include respond(tab-port) {
+                width: 100%;
+            }
         }
     }
 
@@ -21,11 +34,24 @@
         width: 400px;
         display: flex;
         flex-direction: column;
+
+        @include respond(phone) {
+            width: 100%;
+        }
     }
 
     &__header {
         display: flex;
         justify-content: space-between;
+
+        @include respond(phone) {
+            flex-direction: column;
+        }
+    }
+
+    &__price {
+        font-size: 1.8rem;
+        font-weight: normal;
     }
 
     &__brand {
@@ -40,6 +66,10 @@
         padding: 10px 15px;
         font-size: 14px;
         border: 1px solid rgba(129, 129, 129, 0.25);
+
+        @include respond(phone) {
+            width: 70%;
+        }
     }
 
     &__stock {

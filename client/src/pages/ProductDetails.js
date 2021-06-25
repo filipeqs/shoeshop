@@ -7,8 +7,9 @@ import Alert from '../components/Alert';
 import Loader from '../components/Loader';
 
 import { getProductById } from '../redux/actions/productActions';
+import { addToCart } from '../redux/actions/cartActions';
 
-const ProductDetails = ({ match }) => {
+const ProductDetails = ({ match, history }) => {
     const [selected, setSelected] = useState({ qty: 0, _id: '' });
     const dispatch = useDispatch();
 
@@ -27,6 +28,11 @@ const ProductDetails = ({ match }) => {
 
     const handleQty = (e) => {
         setSelected({ ...selected, qty: e.target.value });
+    };
+
+    const handleAddToCard = () => {
+        dispatch(addToCart({ ...product, selected }));
+        history.push('/cart');
     };
 
     return loading ? (
@@ -82,6 +88,7 @@ const ProductDetails = ({ match }) => {
                     <button
                         className="btn btn__black btn--round mt-2"
                         disabled={selected.qty === 0}
+                        onClick={handleAddToCard}
                     >
                         <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
                     </button>

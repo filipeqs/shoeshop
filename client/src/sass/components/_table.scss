@@ -1,0 +1,28 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgb(216, 216, 216);
+    color: rgb(77, 76, 76);
+
+    &__head {
+        background-color: rgb(216, 216, 216);
+
+        padding: 0px;
+
+        &-item {
+            font-weight: normal;
+            padding: 1rem;
+
+            &--wide {
+                text-align: left;
+                width: 60%;
+            }
+        }
+    }
+
+    &__body {
+        &-item {
+            border: 1px solid rgb(216, 216, 216);
+        }
+    }
+}

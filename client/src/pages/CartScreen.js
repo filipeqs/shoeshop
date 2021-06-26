@@ -23,7 +23,7 @@ const CartScreen = () => {
                 </thead>
                 <tbody className="table__body">
                     {cartItems.map((item) => (
-                        <tr key={item._id}>
+                        <tr key={item._id} className="table__body-row">
                             <td className="table__body-item table__item-container">
                                 <div className="table__item-image-container">
                                     <Link to={`product/${item._id}`}>

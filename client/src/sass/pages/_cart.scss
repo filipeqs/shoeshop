@@ -1,0 +1,14 @@
+.cart {
+    &-container {
+        width: 120rem;
+        margin: 0 auto;
+    }
+
+    &__title {
+        text-align: center;
+    }
+
+    &__btn-checkout {
+        float: right;
+    }
+}

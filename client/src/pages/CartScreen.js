@@ -1,15 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import Alert from '../components/Alert';
 
 const CartScreen = () => {
     const { cartItems } = useSelector((state) => state.cart);
+    console.log(cartItems);
 
     return cartItems.length === 0 ? (
         <Alert variant="info">You cart is empty</Alert>
     ) : (
-        <div>
-            <h1>Shopping Bag</h1>
+        <div className="cart-container">
+            <h1 className="cart__title mb-3">Shopping Bag</h1>
             <table className="table">
                 <thead className="table__head">
                     <tr>
@@ -19,13 +22,35 @@ const CartScreen = () => {
                     </tr>
                 </thead>
                 <tbody className="table__body">
-                    <tr>
-                        <td className="table__body-item table__image">Item</td>
-                        <td className="table__body-item table__qty">Item</td>
-                        <td className="table__body-item table__subtotal">Item</td>
-                    </tr>
+                    {cartItems.map((item) => (
+                        <tr key={item._id}>
+                            <td className="table__body-item table__item-container">
+                                <div className="table__item-image-container">
+                                    <Link to={`product/${item._id}`}>
+                                        <img
+                                            className="table__item-image"
+                                            src={item.image}
+                                            alt={item.name}
+                                        />
+                                    </Link>
+                                </div>
+                                <div className="table__item-text">
+                                    <h3 className="header-secondary">{item.name}</h3>
+                                    <div>Size: {item.selected.size}</div>
+                                    <div>${item.price}</div>
+                                </div>
+                            </td>
+                            <td className="table__body-item table__item-qty">
+                                {item.selected.qty}
+                            </td>
+                            <td className="table__body-item table__item-subtotal">
+                                ${Number(item.selected.qty) * Number(item.price)}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
+            <button className="cart__btn-checkout btn btn__black btn--round mt-1">Checkout</button>
         </div>
     );
 };

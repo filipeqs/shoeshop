@@ -33,7 +33,7 @@ const ProductDetails = ({ match, history }) => {
     const handleAddToCard = () => {
         const productToAdd = {
             ...product,
-            qty: selected.qty,
+            qty: Number(selected.qty),
             count: selected.count,
             size: selected.size,
             selectedId: selected._id,

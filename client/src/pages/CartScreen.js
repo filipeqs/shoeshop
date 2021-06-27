@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../components/Alert';
 
-import { addToCart } from '../redux/actions/cartActions';
+import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 
 const CartScreen = () => {
     const dispatch = useDispatch();
@@ -24,6 +24,10 @@ const CartScreen = () => {
             productToEdit.qty !== productToEdit.count ? productToEdit.qty + 1 : productToEdit.qty;
 
         dispatch(addToCart(productToEdit));
+    };
+
+    const handleRemoveFromCart = (selectedId) => {
+        dispatch(removeFromCart(selectedId));
     };
 
     return cartItems.length === 0 ? (
@@ -59,19 +63,27 @@ const CartScreen = () => {
                                 </div>
                             </td>
                             <td className="table__body-item table__item-qty">
-                                <span
-                                    className="cart__edit"
-                                    onClick={() => handleMinusQty(item.selectedId)}
+                                <div className="cart__edit-container">
+                                    <span
+                                        className="cart__edit"
+                                        onClick={() => handleMinusQty(item.selectedId)}
+                                    >
+                                        -
+                                    </span>
+                                    <span className="cart__qty">{item.qty}</span>
+                                    <span
+                                        className="cart__edit"
+                                        onClick={() => handleAddQty(item.selectedId)}
+                                    >
+                                        +
+                                    </span>
+                                </div>
+                                <button
+                                    className="cart__remove btn btn__transparent"
+                                    onClick={() => handleRemoveFromCart(item.selectedId)}
                                 >
-                                    -
-                                </span>
-                                <span className="cart__qty">{item.qty}</span>
-                                <span
-                                    className="cart__edit"
-                                    onClick={() => handleAddQty(item.selectedId)}
-                                >
-                                    +
-                                </span>
+                                    Remove
+                                </button>
                             </td>
                             <td className="table__body-item table__item-subtotal">
                                 ${Number(item.qty) * Number(item.price)}

@@ -5,15 +5,15 @@
 @import 'base/typography';
 @import 'base/utilities';
 
-@import 'pages/auth';
-@import 'pages/product-details';
-@import 'pages/cart';
-
-@import 'layout/header';
-
 @import 'components/alert';
 @import 'components/loader';
 @import 'components/form';
 @import 'components/btn';
 @import 'components/product';
 @import 'components/table';
+
+@import 'pages/auth';
+@import 'pages/product-details';
+@import 'pages/cart';
+
+@import 'layout/header';

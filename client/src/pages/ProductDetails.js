@@ -31,7 +31,15 @@ const ProductDetails = ({ match, history }) => {
     };
 
     const handleAddToCard = () => {
-        dispatch(addToCart({ ...product, selected }));
+        const productToAdd = {
+            ...product,
+            qty: selected.qty,
+            count: selected.count,
+            size: selected.size,
+            selectedId: selected._id,
+        };
+
+        dispatch(addToCart(productToAdd));
         history.push('/cart');
     };
 

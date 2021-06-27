@@ -12,7 +12,7 @@ export const cartReducer = (state = { cartItems: cartItemsFromStorage }, action)
             const itemToAdd = payload;
 
             const existItem = state.cartItems.find(
-                (cartItem) => cartItem.selected._id === itemToAdd.selected._id,
+                (cartItem) => cartItem.selectedId === itemToAdd.selectedId,
             );
 
             console.log(existItem);
@@ -21,7 +21,7 @@ export const cartReducer = (state = { cartItems: cartItemsFromStorage }, action)
                 return {
                     ...state,
                     cartItems: state.cartItems.map((cartItem) =>
-                        cartItem.selected._id === existItem.selected._id ? itemToAdd : cartItem,
+                        cartItem.selectedId === existItem.selectedId ? itemToAdd : cartItem,
                     ),
                 };
             } else {

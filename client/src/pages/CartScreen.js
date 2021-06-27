@@ -1,12 +1,30 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Alert from '../components/Alert';
 
+import { addToCart } from '../redux/actions/cartActions';
+
 const CartScreen = () => {
+    const dispatch = useDispatch();
+
     const { cartItems } = useSelector((state) => state.cart);
-    console.log(cartItems);
+
+    const handleMinusQty = (selectedId) => {
+        const productToEdit = cartItems.find((item) => item.selectedId === selectedId);
+        productToEdit.qty = productToEdit.qty > 1 ? productToEdit.qty - 1 : productToEdit.qty;
+
+        dispatch(addToCart(productToEdit));
+    };
+
+    const handleAddQty = (selectedId) => {
+        const productToEdit = cartItems.find((item) => item.selectedId === selectedId);
+        productToEdit.qty =
+            productToEdit.qty !== productToEdit.count ? productToEdit.qty + 1 : productToEdit.qty;
+
+        dispatch(addToCart(productToEdit));
+    };
 
     return cartItems.length === 0 ? (
         <Alert variant="info">You cart is empty</Alert>
@@ -36,15 +54,27 @@ const CartScreen = () => {
                                 </div>
                                 <div className="table__item-text">
                                     <h3 className="header-secondary">{item.name}</h3>
-                                    <div>Size: {item.selected.size}</div>
+                                    <div>Size: {item.size}</div>
                                     <div>${item.price}</div>
                                 </div>
                             </td>
                             <td className="table__body-item table__item-qty">
-                                {item.selected.qty}
+                                <span
+                                    className="cart__edit"
+                                    onClick={() => handleMinusQty(item.selectedId)}
+                                >
+                                    -
+                                </span>
+                                <span className="cart__qty">{item.qty}</span>
+                                <span
+                                    className="cart__edit"
+                                    onClick={() => handleAddQty(item.selectedId)}
+                                >
+                                    +
+                                </span>
                             </td>
                             <td className="table__body-item table__item-subtotal">
-                                ${Number(item.selected.qty) * Number(item.price)}
+                                ${Number(item.qty) * Number(item.price)}
                             </td>
                         </tr>
                     ))}

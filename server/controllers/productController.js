@@ -54,7 +54,7 @@ const getProductById = async (req, res, next) => {
 
 // @desc    Create new Product
 // @route   POST api/products
-// @access  Private
+// @access  Private/Admin
 const createProduct = async (req, res, next) => {
     try {
         const { name, brand, description, image, price, stock } = req.body;
@@ -75,4 +75,29 @@ const createProduct = async (req, res, next) => {
     }
 };
 
-module.exports = { getProducts, getProductById, createProduct };
+// @desc    Update Product
+// @route   PUT api/products/:id
+// @access  Private/Admin
+const updateProduct = async (req, res, next) => {
+    try {
+        const { name, brand, description, image, price, stock } = req.body;
+
+        const product = await Product.findById(req.params.id);
+
+        if (!product) throw new BadRequest('Product not found!');
+
+        product.name = name;
+        product.brand = brand;
+        product.description = description;
+        product.image = image;
+        product.price = price;
+        product.stock = stock;
+
+        const updatedProduct = await product.save();
+        return res.json(updatedProduct);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { getProducts, getProductById, createProduct, updateProduct };

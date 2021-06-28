@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from '../components/Alert';
+import { Row, Col, Button } from 'react-bootstrap';
 
+import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Product from '../components/Product';
 
@@ -33,21 +34,23 @@ const HomeScreen = () => {
     return loading && firstLoad ? (
         <Loader />
     ) : (
-        <div className="products-container">
-            {error && <Alert variant="danger">{error}</Alert>}
-            <div className="products">
+        <Fragment>
+            {error && <Message variant="danger">{error}</Message>}
+            <Row>
                 {products.map((product) => (
-                    <Product product={product} key={product._id} />
+                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                        <Product product={product} />
+                    </Col>
                 ))}
-            </div>
-            <div className="products__btn-container">
+            </Row>
+            <div className="product__btn">
                 {page < pages && (
-                    <button onClick={loadMore} className="btn btn__black btn--round text-uppercase">
+                    <Button variant="primary" onClick={loadMore}>
                         Load More
-                    </button>
+                    </Button>
                 )}
             </div>
-        </div>
+        </Fragment>
     );
 };
 

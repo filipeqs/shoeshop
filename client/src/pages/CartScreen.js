@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col, ListGroup, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import Alert from '../components/Alert';
+import Message from '../components/Message';
 
 import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 
@@ -30,70 +31,79 @@ const CartScreen = () => {
         dispatch(removeFromCart(selectedId));
     };
 
-    return cartItems.length === 0 ? (
-        <Alert variant="info">You cart is empty</Alert>
-    ) : (
-        <div className="cart-container">
-            <h1 className="cart__title mb-3">Shopping Bag</h1>
-            <table className="table">
-                <thead className="table__head">
-                    <tr>
-                        <th className="table__head-item table__head-item--wide">Item</th>
-                        <th className="table__head-item">Quanty</th>
-                        <th className="table__head-item">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody className="table__body">
-                    {cartItems.map((item) => (
-                        <tr key={item._id} className="table__body-row">
-                            <td className="table__body-item table__item-container">
-                                <div className="table__item-image-container">
-                                    <Link to={`product/${item._id}`}>
-                                        <img
-                                            className="table__item-image"
-                                            src={item.image}
-                                            alt={item.name}
-                                        />
-                                    </Link>
-                                </div>
-                                <div className="table__item-text">
-                                    <h3 className="header-secondary">{item.name}</h3>
-                                    <div>Size: {item.size}</div>
-                                    <div>${item.price}</div>
-                                </div>
-                            </td>
-                            <td className="table__body-item table__item-qty">
-                                <div className="cart__edit-container">
-                                    <span
-                                        className="cart__edit"
-                                        onClick={() => handleMinusQty(item.selectedId)}
-                                    >
-                                        -
-                                    </span>
-                                    <span className="cart__qty">{item.qty}</span>
-                                    <span
-                                        className="cart__edit"
-                                        onClick={() => handleAddQty(item.selectedId)}
-                                    >
-                                        +
-                                    </span>
-                                </div>
-                                <button
-                                    className="cart__remove btn btn__transparent"
-                                    onClick={() => handleRemoveFromCart(item.selectedId)}
-                                >
-                                    Remove
-                                </button>
-                            </td>
-                            <td className="table__body-item table__item-subtotal">
-                                ${Number(item.qty) * Number(item.price)}
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <button className="cart__btn-checkout btn btn__black btn--round mt-1">Checkout</button>
-        </div>
+    return (
+        <Row>
+            <Col md={12}>
+                <h1>Shopping Cart</h1>
+                {cartItems.length === 0 ? (
+                    <Message>
+                        Your cart is empty <Link to="/">Go Back</Link>
+                    </Message>
+                ) : (
+                    <Fragment>
+                        <ListGroup.Item>
+                            <Row>
+                                <Col md={6}>Item</Col>
+                                <Col md={4} className="text-center">
+                                    Quanty
+                                </Col>
+                                <Col md={2} className="text-center">
+                                    Subtotal
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                        {cartItems.map((cartItem) => (
+                            <ListGroup.Item key={cartItem._id}>
+                                <Row className="cart__item">
+                                    <Col md={2}>
+                                        <Link to={`/product/${cartItem._id}`}>
+                                            <Image src={cartItem.image} alt={cartItem.name} fluid />
+                                        </Link>
+                                    </Col>
+                                    <Col md={4}>
+                                        <h4>{cartItem.name}</h4>
+                                        <div>Size: {cartItem.size}</div>
+                                        <div>${cartItem.price}</div>
+                                    </Col>
+                                    <Col md={4} className="text-center">
+                                        <div className="cart__edit-container">
+                                            <span
+                                                className="cart__edit"
+                                                onClick={() => handleMinusQty(cartItem.selectedId)}
+                                            >
+                                                -
+                                            </span>
+                                            <span className="cart__edit-qty">{cartItem.qty}</span>
+                                            <span
+                                                className="cart__edit"
+                                                onClick={() => handleAddQty(cartItem.selectedId)}
+                                            >
+                                                +
+                                            </span>
+                                        </div>
+                                        <button
+                                            className="cart__edit-remove btn"
+                                            onClick={() =>
+                                                handleRemoveFromCart(cartItem.selectedId)
+                                            }
+                                        >
+                                            Remove
+                                        </button>
+                                    </Col>
+                                    <Col md={2} className="text-center">
+                                        ${Number(cartItem.qty) * Number(cartItem.price)}
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        ))}
+                        <ListGroup variant="flush"></ListGroup>
+                        <Button variant="primary" className="float-right mt-4">
+                            Checkout
+                        </Button>
+                    </Fragment>
+                )}
+            </Col>
+        </Row>
     );
 };
 

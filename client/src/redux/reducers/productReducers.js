@@ -44,7 +44,7 @@ export const productListReducer = (state = { loading: true, products: [] }, acti
     }
 };
 
-export const productDetailsReducer = (state = { product: { stock: [] } }, action) => {
+export const productDetailsReducer = (state = { product: { stock: [], reviews: [] } }, action) => {
     const { payload, type } = action;
 
     switch (type) {

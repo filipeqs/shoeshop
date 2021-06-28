@@ -4,13 +4,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
+        height: calc(100vh - 70px);
     }
 
     &-wrapper {
         background-color: whitesmoke;
         min-width: 400px;
-        max-width: 400px;
         min-height: 500px;
         display: flex;
         align-items: center;
@@ -19,6 +18,15 @@
         padding: 1rem 6rem;
         border-radius: 0.5rem;
         box-shadow: 0px 0px 10px 0px rgba($color-black, 0.2);
+
+        @include respond(phone) {
+            padding: 1rem 1rem;
+            min-width: 300px;
+        }
+
+        @include respond(phone-xs) {
+            min-width: 200px;
+        }
     }
 
     &__form {
@@ -26,14 +34,34 @@
         flex-direction: column;
         width: 100%;
         margin-top: 20px;
+
+        &-group {
+            position: relative;
+        }
+
+        &-icon {
+            position: absolute;
+            height: 4.5rem;
+            left: 1rem;
+            top: 1.6rem;
+        }
+
+        &-input {
+            height: 45px;
+            border-radius: 0.2rem;
+            padding-left: 4rem;
+            font-size: $default-font-size;
+        }
     }
 
-    &__group {
+    &__btn-group {
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         a {
             width: 49%;
+            text-align: center;
         }
 
         button {

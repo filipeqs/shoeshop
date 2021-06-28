@@ -1,98 +1,17 @@
-.products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 10rem;
-
-    @include respond(tab-port) {
-        padding: 0 2rem;
-    }
-
-    &__btn {
-        &-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1rem;
-        }
-    }
-}
-
 .product {
-    &-container {
-        width: 20.5%;
-        margin: 2rem 2rem;
-
-        @include respond(tab-land) {
-            width: 43%;
-        }
-
-        @include respond(tab-port) {
-            width: 50%;
-        }
-
-        @include respond(phone) {
-            width: 100%;
-        }
+    &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
     }
 
-    &__link {
-        display: block;
-        text-decoration: none;
-        color: $color-primary;
+    &__title {
+        display: flex;
+        justify-content: space-between;
     }
 
-    &__img {
-        display: block;
-        width: 100%;
-
-        &-container {
-            background-color: whitesmoke;
-        }
-    }
-
-    &__description {
-        position: relative;
-        overflow: hidden;
-        min-height: 45px;
-
-        h3 {
-            display: flex;
-            justify-content: space-between;
-        }
-    }
-
-    &__top {
-        position: relative;
-        animation-name: moveFomTop;
-        animation-duration: 0.2s;
-    }
-
-    &__action {
-        position: relative;
-        animation-name: moveFomBottom;
-        animation-duration: 0.2s;
-    }
-
-    &__brand {
-        opacity: 0.7;
-    }
-}
-
-@keyframes moveFomTop {
-    from {
-        top: -100px;
-    }
-    to {
-        top: 0;
-    }
-}
-
-@keyframes moveFomBottom {
-    from {
-        top: 100px;
-    }
-    to {
-        top: 0;
+    &__image {
+        background-color: whitesmoke;
     }
 }

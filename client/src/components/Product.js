@@ -1,44 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { Card } from 'react-bootstrap';
+import Rating from './Rating';
 
 const Product = ({ product }) => {
-    const [hovered, setHovered] = useState(false);
-
-    const { _id, name, price, brand, image } = product;
-
-    const toggleHover = () => setHovered(!hovered);
+    const { _id, name, price, brand, image, rating } = product;
 
     return (
-        <div className="product-container">
-            <Link
-                to={`/product/${_id}`}
-                className="product__link"
-                onMouseEnter={toggleHover}
-                onMouseLeave={toggleHover}
-            >
-                <div className="product__img-container">
-                    <img className="product__img" src={image} alt={name} />
-                </div>
-                <div className="mt-05 product__description">
-                    {!hovered && (
-                        <div className="product__top">
-                            <h3 className="header-secondary">
-                                <span className="product__name">{name}</span>
-                                <span className="product__price">${price}</span>
-                            </h3>
-                            <p className="product__brand mt-05">{brand}</p>
-                        </div>
-                    )}
-                    {hovered && (
-                        <p className="product__action mt-1">
-                            <FontAwesomeIcon icon={faShoppingCart} /> Buy
-                        </p>
-                    )}
-                </div>
+        <Card className="my-3 border-none">
+            <Link to={`/product/${_id}`}>
+                <Card.Img src={image} variant="top" className="product__image" />
             </Link>
-        </div>
+
+            <Card.Body>
+                <Link to={`/product/${_id}`}>
+                    <Card.Title as="div" className="product__title">
+                        <span>{name}</span>
+                        <span>${price}</span>
+                    </Card.Title>
+                </Link>
+
+                <Card.Text as="p">{brand}</Card.Text>
+
+                <Card.Text as="div">
+                    <Rating value={rating} />
+                </Card.Text>
+            </Card.Body>
+        </Card>
     );
 };
 

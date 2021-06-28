@@ -12,13 +12,4 @@ html {
 
 body {
     box-sizing: border-box;
-    font-size: $default-font-size;
-}
-
-.container {
-    padding: 1rem;
-    position: relative;
-    top: 70px;
-    height: calc(100vh - 70px);
-    min-height: calc(100vh - 70px);
 }

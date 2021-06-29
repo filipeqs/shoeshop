@@ -131,10 +131,32 @@ const createProductReview = async (req, res, next) => {
             product.reviews.length;
         await product.save();
 
-        res.status(201).json({ message: 'Review added' });
+        return res.status(201).json({ message: 'Review added' });
     } catch (error) {
         next(error);
     }
 };
 
-module.exports = { getProducts, getProductById, createProduct, updateProduct, createProductReview };
+// @desc    Get Reviews By Product ID
+// @route   GET /api/products/:id/reviews
+// @access  Private
+const getReviewsByProductId = async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) throw new BadRequest('Product not found!');
+
+        return res.json(product.reviews);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    getProducts,
+    getProductById,
+    createProduct,
+    updateProduct,
+    createProductReview,
+    getReviewsByProductId,
+};

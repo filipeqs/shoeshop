@@ -10,6 +10,9 @@ import {
     PRODUCT_CREATE_REVIEW_REQUEST,
     PRODUCT_CREATE_REVIEW_SUCCESS,
     PRODUCT_CREATE_REVIEW_FAIL,
+    PRODUCT_REVIEW_LIST_REQUEST,
+    PRODUCT_REVIEW_LIST_SUCCESS,
+    PRODUCT_REVIEW_LIST_FAIL,
 } from '../constants/productConstants';
 
 export const getProducts = (pageNumber) => async (dispatch) => {
@@ -81,6 +84,27 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
     } catch (error) {
         dispatch({
             type: PRODUCT_CREATE_REVIEW_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const getReviewsByProductId = (productId) => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_REVIEW_LIST_REQUEST });
+
+        const { data } = await axios.get(`/api/products/${productId}/reviews`);
+
+        dispatch({
+            type: PRODUCT_REVIEW_LIST_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_REVIEW_LIST_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

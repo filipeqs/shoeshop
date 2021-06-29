@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Button, Form } from 'react-bootstrap';
@@ -7,25 +7,50 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Rating from '../components/Rating';
 
-import { getProductById } from '../redux/actions/productActions';
+import { getProductById, createProductReview } from '../redux/actions/productActions';
 import { addToCart } from '../redux/actions/cartActions';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/productConstants';
 
 const ProductDetails = ({ match, history }) => {
     const [selected, setSelected] = useState({ qty: 0, _id: '' });
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const [message, setMessage] = useState('');
     const dispatch = useDispatch();
-
-    const productDetails = useSelector((state) => state.productDetails);
-    const { loading, error, product } = productDetails;
-    const { name, image, price, description, brand, stock, rating, reviews, numReviews } = product;
 
     const { userInfo } = useSelector((state) => state.userLogin);
 
+    const productDetails = useSelector((state) => state.productDetails);
+    const { loading, error, product } = productDetails;
+
+    const productReviewCreate = useSelector((state) => state.productReviewCreate);
+    const {
+        success: successProductReview,
+        error: errorProductReview,
+        loading: loadingProductReview,
+    } = productReviewCreate;
+
     useEffect(() => {
+        if (successProductReview) {
+            setMessage('Review Submited');
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
+            setRating(0);
+            setComment('');
+            dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+        }
         dispatch(getProductById(match.params.id));
-    }, [match.params.id, dispatch]);
+    }, [match.params.id, dispatch, successProductReview]);
+
+    useLayoutEffect(() => {
+        return () => {
+            dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+        };
+    }, [dispatch]);
 
     const handleSelected = (e) => {
-        const newSelected = stock.filter((value) => value._id === e.target.value)[0];
+        const newSelected = product.stock.filter((value) => value._id === e.target.value)[0];
         setSelected({ ...newSelected, qty: 0 });
     };
 
@@ -46,6 +71,11 @@ const ProductDetails = ({ match, history }) => {
         history.push('/cart');
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(createProductReview(match.params.id, { rating, comment }));
+    };
+
     return loading ? (
         <Loader />
     ) : error ? (
@@ -54,26 +84,26 @@ const ProductDetails = ({ match, history }) => {
         <Fragment>
             <Row>
                 <Col md={6}>
-                    <Image src={image} alt={name} fluid />
+                    <Image src={product.image} alt={product.name} fluid />
                 </Col>
                 <Col md={6}>
                     <ListGroup variant="flush">
                         <ListGroup.Item className="border-none">
                             <Row>
                                 <Col>
-                                    <h3>{name}</h3>
+                                    <h3>{product.name}</h3>
                                 </Col>
                                 <Col>
-                                    <h3>${price}</h3>
+                                    <h3>${product.price}</h3>
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-                        <ListGroup.Item className="border-none">{brand}</ListGroup.Item>
+                        <ListGroup.Item className="border-none">{product.brand}</ListGroup.Item>
                         <ListGroup.Item className="border-none">
-                            <Rating value={rating} text={`${numReviews} reviews`} />
+                            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                         </ListGroup.Item>
                         <ListGroup.Item className="border-none">
-                            Description: {description}
+                            Description: {product.description}
                         </ListGroup.Item>
                         <ListGroup.Item className="border-none">
                             <Form.Control
@@ -84,7 +114,7 @@ const ProductDetails = ({ match, history }) => {
                                 <option value="" disabled defaultValue>
                                     Select a size
                                 </option>
-                                {stock.map(({ _id, size }) => (
+                                {product.stock.map(({ _id, size }) => (
                                     <option key={_id} value={_id}>
                                         {size}
                                     </option>
@@ -132,9 +162,9 @@ const ProductDetails = ({ match, history }) => {
             <Row>
                 <Col md={6}>
                     <h2>Reviews</h2>
-                    {reviews.length === 0 && <Message>No Reviews</Message>}
+                    {product.reviews.length === 0 && <Message>No Reviews</Message>}
                     <ListGroup variant="flush">
-                        {reviews.map((review) => (
+                        {product.reviews.map((review) => (
                             <ListGroup.Item key={review._id}>
                                 <strong>{review.name}</strong>
                                 <Rating value={review.rating} />
@@ -144,12 +174,20 @@ const ProductDetails = ({ match, history }) => {
                         ))}
                         <ListGroup.Item>
                             <h2>Write a Customer Review</h2>
-
+                            {errorProductReview && (
+                                <Message variant="danger">{errorProductReview}</Message>
+                            )}
+                            {message && <Message variant="success">{message}</Message>}
                             {userInfo ? (
-                                <Form>
+                                <Form onSubmit={handleSubmit}>
                                     <Form.Group controlId="rating">
                                         <Form.Label>Rating</Form.Label>
-                                        <Form.Control as="select">
+                                        <Form.Control
+                                            as="select"
+                                            value={rating}
+                                            required
+                                            onChange={(e) => setRating(e.target.value)}
+                                        >
                                             <option value="">Select...</option>
                                             <option value="1">1 - Poor</option>
                                             <option value="2">2 - Fair</option>
@@ -160,9 +198,19 @@ const ProductDetails = ({ match, history }) => {
                                     </Form.Group>
                                     <Form.Group controlId="comment">
                                         <Form.Label>Comment</Form.Label>
-                                        <Form.Control as="textarea" row="3"></Form.Control>
+                                        <Form.Control
+                                            as="textarea"
+                                            row="3"
+                                            value={comment}
+                                            required
+                                            onChange={(e) => setComment(e.target.value)}
+                                        ></Form.Control>
                                     </Form.Group>
-                                    <Button type="submit" variant="primary">
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        disabled={loadingProductReview}
+                                    >
                                         Submit
                                     </Button>
                                 </Form>

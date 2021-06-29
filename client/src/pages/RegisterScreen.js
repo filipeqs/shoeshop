@@ -40,7 +40,7 @@ const RegisterScreen = ({ history, location }) => {
         <Container className="auth-container">
             <Row className="justfy-content-mid-center">
                 <Col xs={12} md={6} className="auth-wrapper">
-                    <h1 className="auth__title">Register</h1>
+                    <h2>Register</h2>
                     {loading && <Loader />}
                     {error && <Message variant="danger">{error}</Message>}
                     {message && <Message variant="danger">{message}</Message>}

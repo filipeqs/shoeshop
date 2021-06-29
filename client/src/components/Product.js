@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import Rating from './Rating';
@@ -13,18 +13,20 @@ const Product = ({ product }) => {
             </Link>
 
             <Card.Body>
-                <Link to={`/product/${_id}`}>
-                    <Card.Title as="div" className="product__title">
-                        <span>{name}</span>
-                        <span>${price}</span>
-                    </Card.Title>
-                </Link>
+                <Fragment>
+                    <Link to={`/product/${_id}`}>
+                        <Card.Title as="div" className="product__title">
+                            <span>{name}</span>
+                            <span>${price}</span>
+                        </Card.Title>
+                    </Link>
 
-                <Card.Text as="p">{brand}</Card.Text>
+                    <Card.Text as="p">{brand}</Card.Text>
 
-                <Card.Text as="div">
-                    <Rating value={rating} />
-                </Card.Text>
+                    <Card.Text as="div">
+                        <Rating value={rating} />
+                    </Card.Text>
+                </Fragment>
             </Card.Body>
         </Card>
     );

@@ -84,7 +84,12 @@ const ProductDetails = ({ match, history }) => {
         <Fragment>
             <Row>
                 <Col md={6}>
-                    <Image src={product.image} alt={product.name} fluid />
+                    <Image
+                        src={product.image}
+                        alt={product.name}
+                        fluid
+                        className="product-details__image"
+                    />
                 </Col>
                 <Col md={6}>
                     <ListGroup variant="flush">
@@ -159,9 +164,9 @@ const ProductDetails = ({ match, history }) => {
                 </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-2">
                 <Col md={6}>
-                    <h2>Reviews</h2>
+                    <h3>Reviews</h3>
                     {product.reviews.length === 0 && <Message>No Reviews</Message>}
                     <ListGroup variant="flush">
                         {product.reviews.map((review) => (
@@ -173,7 +178,7 @@ const ProductDetails = ({ match, history }) => {
                             </ListGroup.Item>
                         ))}
                         <ListGroup.Item>
-                            <h2>Write a Customer Review</h2>
+                            <h4>Write a Customer Review</h4>
                             {errorProductReview && (
                                 <Message variant="danger">{errorProductReview}</Message>
                             )}

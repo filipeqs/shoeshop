@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, ListGroup, Button, Form } from 'react-bootstrap';
 
 import Message from '../../components/Message';
-import Rating from '../../components/Rating';
 import Loader from '../../components/Loader';
+import ReviewDetails from './ReviewDetails';
+import Rating from '../Rating';
+import RatingBars from '../RatingBars';
 
 import { createProductReview, getReviewsByProductId } from '../../redux/actions/productActions';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../../redux/constants/productConstants';
@@ -53,25 +55,34 @@ const ReviewList = ({ productId }) => {
         dispatch(createProductReview(productId, { rating, comment }));
     };
 
+    const getReviewValue = () =>
+        reviews.reduce((acc, review) => review.rating + acc, 0) / reviews.length || 0;
+
     return loading ? (
         <Loader />
     ) : error ? (
         <Message variant="danger">{error}</Message>
     ) : (
-        <Row className="mt-2">
-            <Col md={4}></Col>
+        <Row className="mt-4">
+            <Col md={4}>
+                <h3>Customer reviews</h3>
+                <Rating
+                    value={getReviewValue()}
+                    text={`${getReviewValue()} out of 5`}
+                    color={'#f0ad4e'}
+                />
+                <p>{`${reviews.length} total ratings`}</p>
+                {reviews.length !== 0 && <RatingBars reviews={reviews} />}
+            </Col>
             <Col md={8}>
-                <h3>Reviews</h3>
+                <h3>Recent Reviews</h3>
                 {reviews.length === 0 && <Message>No Reviews</Message>}
                 <ListGroup variant="flush">
                     {reviews.map((review) => (
-                        <ListGroup.Item key={review._id}>
-                            <strong>{review.name}</strong>
-                            <Rating value={review.rating} />
-                            <p>Reviewed at {review.createdAt.substring(0, 10)}</p>
-                            <p>{review.comment}</p>
-                        </ListGroup.Item>
+                        <ReviewDetails review={review} key={review._id} />
                     ))}
+                </ListGroup>
+                <ListGroup variant="flush">
                     <ListGroup.Item>
                         <h4>Write a Customer Review</h4>
                         {errorProductReview && (

@@ -1,0 +1,69 @@
+import React, { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
+
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+
+import RatingBars from '../components/RatingBars';
+import ReviewList from '../components/review-list/ReviewList';
+import ReviewForm from '../components/ReviewForm';
+import ProductDetails from '../components/ProductDetails';
+
+import { getProductById, getReviewsByProductId } from '../redux/actions/productActions';
+
+const ProductScreen = ({ match }) => {
+    const dispatch = useDispatch();
+
+    const productDetails = useSelector((state) => state.productDetails);
+    const { loading: loadingProduct, error, product } = productDetails;
+
+    const productReviewList = useSelector((state) => state.productReviewList);
+    const { loading: loadingReviews } = productReviewList;
+
+    const productReviewCreate = useSelector((state) => state.productReviewCreate);
+    const { success: successProductReview } = productReviewCreate;
+
+    useEffect(() => {
+        dispatch(getProductById(match.params.id));
+        dispatch(getReviewsByProductId(match.params.id));
+    }, [match.params.id, dispatch, successProductReview]);
+
+    return (
+        <Fragment>
+            {loadingProduct ? (
+                <Loader />
+            ) : error ? (
+                <Message variant="danger">{error}</Message>
+            ) : (
+                <Fragment>
+                    <Row>
+                        <ProductDetails />
+                    </Row>
+                    {loadingReviews ? (
+                        <Loader />
+                    ) : (
+                        product &&
+                        product._id && (
+                            <Row className="mt-4">
+                                <Col md={4}>
+                                    <RatingBars />
+                                </Col>
+                                <Col md={8}>
+                                    <ReviewList />
+                                </Col>
+                            </Row>
+                        )
+                    )}
+                </Fragment>
+            )}
+            <Row>
+                <Col md={8}>
+                    <ReviewForm />
+                </Col>
+            </Row>
+        </Fragment>
+    );
+};
+
+export default ProductScreen;

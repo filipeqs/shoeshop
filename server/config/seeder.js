@@ -8,6 +8,7 @@ const products = require('../data/products');
 const Address = require('../models/addressModel');
 const Order = require('../models/orderMode');
 const Product = require('../models/productModel');
+const Review = require('../models/reviewModel');
 const User = require('../models/userModel');
 
 dotenv.config();
@@ -19,6 +20,7 @@ const importData = async () => {
         await Order.deleteMany();
         await Address.deleteMany();
         await Product.deleteMany();
+        await Review.deleteMany();
         await User.deleteMany();
 
         const createdUser = await User.insertMany(users);
@@ -42,6 +44,7 @@ const destroyData = async () => {
         await Order.deleteMany();
         await Address.deleteMany();
         await Product.deleteMany();
+        await Review.deleteMany();
         await User.deleteMany();
 
         console.log('Data Destroyed!'.green.inverse);

@@ -79,7 +79,7 @@ export const productDetailsReducer = (state = { product: { stock: [], reviews: [
     }
 };
 
-export const productReviewCreateReducer = (state = {}, action) => {
+export const productReviewCreateReducer = (state = { success: false }, action) => {
     const { payload, type } = action;
 
     switch (type) {
@@ -87,13 +87,13 @@ export const productReviewCreateReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: true,
-                success: false,
             };
         case PRODUCT_CREATE_REVIEW_SUCCESS:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 success: true,
+                error: null,
             };
         case PRODUCT_CREATE_REVIEW_FAIL:
             return {

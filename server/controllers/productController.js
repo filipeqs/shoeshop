@@ -1,5 +1,6 @@
 const { NotFound, BadRequest } = require('../utils/errors');
 const Product = require('../models/productModel');
+const Review = require('../models/reviewModel');
 
 const sorts = {
     rating: { rating: -1 },
@@ -111,24 +112,27 @@ const createProductReview = async (req, res, next) => {
 
         if (!product) throw new BadRequest('Product not found!');
 
-        const alreadyReviewed = product.reviews.find(
+        let reviews = await Review.find({ product: req.params.id });
+
+        const alreadyReviewed = reviews.find(
             (review) => review.user.toString() === req.user._id.toString(),
         );
 
         if (alreadyReviewed) throw new BadRequest('Product already reviewed');
 
-        const newReview = {
+        const newReview = new Review({
             name: req.user.name,
             rating: Number(rating),
             comment,
             user: req.user._id,
-        };
+            product: req.params.id,
+        });
 
-        product.reviews.push(newReview);
-        product.numReviews = product.reviews.length;
-        product.rating =
-            product.reviews.reduce((acc, review) => review.rating + acc, 0) /
-            product.reviews.length;
+        await newReview.save();
+
+        reviews = await Review.find({ product: req.params.id });
+        product.numReviews = reviews.length;
+        product.rating = reviews.reduce((acc, review) => review.rating + acc, 0) / reviews.length;
         await product.save();
 
         return res.status(201).json({ message: 'Review added' });
@@ -146,7 +150,9 @@ const getReviewsByProductId = async (req, res, next) => {
 
         if (!product) throw new BadRequest('Product not found!');
 
-        return res.json(product.reviews);
+        const reviews = await Review.find({ product: req.params.id });
+
+        return res.json(reviews);
     } catch (error) {
         next(error);
     }

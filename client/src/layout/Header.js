@@ -27,32 +27,23 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
                             {userInfo ? (
-                                <NavDropdown
-                                    title={userInfo.name}
-                                    id="username"
-                                    className="header__link"
-                                >
+                                <NavDropdown title={userInfo.name} id="username">
                                     <LinkContainer to="/profile">
-                                        <NavDropdown.Item className="header__link">
-                                            Porfile
-                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>Porfile</NavDropdown.Item>
                                     </LinkContainer>
-                                    <NavDropdown.Item
-                                        className="header__link"
-                                        onClick={handleLogout}
-                                    >
+                                    <NavDropdown.Item onClick={handleLogout}>
                                         Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             ) : (
                                 <LinkContainer to="/login">
-                                    <Nav.Link className="header__link">
+                                    <Nav.Link>
                                         <i className="fas fa-user"></i> Sign In
                                     </Nav.Link>
                                 </LinkContainer>
                             )}
                             <LinkContainer to="/cart">
-                                <Nav.Link className="header__link">
+                                <Nav.Link>
                                     <i className="fas fa-shopping-cart"></i> Cart
                                 </Nav.Link>
                             </LinkContainer>

@@ -94,14 +94,14 @@ const RegisterScreen = ({ history, location }) => {
                             ></Form.Control>
                         </Form.Group>
 
-                        <Button type="submit" variant="primary">
+                        <Button type="submit" variant="dark">
                             Register
                         </Button>
 
                         <div className="auth__btn-group mt-3">
                             <Link to="/#">Forgot Password?</Link>
                             <Link to="/login">
-                                <Button type="button" variant="primary">
+                                <Button type="button" variant="dark">
                                     Sign In
                                 </Button>
                             </Link>

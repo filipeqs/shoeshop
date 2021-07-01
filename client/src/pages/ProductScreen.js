@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Breadcrumb } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -11,6 +11,7 @@ import ReviewForm from '../components/ReviewForm';
 import ProductDetails from '../components/ProductDetails';
 
 import { getProductById, getReviewsByProductId } from '../redux/actions/productActions';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const ProductScreen = ({ match }) => {
     const dispatch = useDispatch();
@@ -37,6 +38,13 @@ const ProductScreen = ({ match }) => {
                 <Message variant="danger">{error}</Message>
             ) : (
                 <Fragment>
+                    <Breadcrumb>
+                        <LinkContainer to="/">
+                            <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                        </LinkContainer>
+                        <Breadcrumb.Item active>Product</Breadcrumb.Item>
+                    </Breadcrumb>
+
                     <Row>
                         <ProductDetails />
                     </Row>

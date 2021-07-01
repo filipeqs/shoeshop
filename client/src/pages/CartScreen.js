@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, ListGroup, Image, Button } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Button, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import Message from '../components/Message';
 
@@ -34,7 +35,13 @@ const CartScreen = () => {
     return (
         <Row>
             <Col md={12}>
-                <h1>Shopping Cart</h1>
+                <Breadcrumb>
+                    <LinkContainer to="/">
+                        <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                    </LinkContainer>
+                    <Breadcrumb.Item active>Cart</Breadcrumb.Item>
+                </Breadcrumb>
+
                 {cartItems.length === 0 ? (
                     <Message>
                         Your cart is empty <Link to="/">Go Back</Link>
@@ -52,6 +59,7 @@ const CartScreen = () => {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
+
                         {cartItems.map((cartItem) => (
                             <ListGroup.Item key={cartItem._id}>
                                 <Row className="cart__item">
@@ -97,7 +105,8 @@ const CartScreen = () => {
                             </ListGroup.Item>
                         ))}
                         <ListGroup variant="flush"></ListGroup>
-                        <Button variant="primary" className="float-right mt-4">
+
+                        <Button variant="dark" className="float-right mt-4">
                             Checkout
                         </Button>
                     </Fragment>

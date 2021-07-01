@@ -61,14 +61,14 @@ const LoginScreen = ({ history, location }) => {
                             ></Form.Control>
                         </Form.Group>
 
-                        <Button type="submit" variant="primary">
+                        <Button type="submit" variant="dark">
                             Sign In
                         </Button>
 
                         <div className="auth__btn-group mt-3">
                             <Link to="/#">Forgot Password?</Link>
                             <Link to="/register">
-                                <Button type="button" variant="primary">
+                                <Button type="button" variant="dark">
                                     Register
                                 </Button>
                             </Link>

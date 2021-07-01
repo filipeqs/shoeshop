@@ -78,7 +78,7 @@ const ReviewForm = () => {
                                 onChange={(e) => setComment(e.target.value)}
                             ></Form.Control>
                         </Form.Group>
-                        <Button type="submit" variant="primary" disabled={loadingProductReview}>
+                        <Button type="submit" variant="dark" disabled={loadingProductReview}>
                             Submit
                         </Button>
                     </Form>

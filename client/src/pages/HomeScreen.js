@@ -45,7 +45,7 @@ const HomeScreen = () => {
             </Row>
             <div className="product__btn">
                 {page < pages && (
-                    <Button variant="primary" onClick={loadMore}>
+                    <Button variant="dark" onClick={loadMore}>
                         Load More
                     </Button>
                 )}

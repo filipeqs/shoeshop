@@ -106,6 +106,7 @@ const ProductDetails = ({ history }) => {
                             onClick={handleAddToCard}
                             className="btn-block"
                             type="button"
+                            variant="dark"
                             disabled={selected.qty === 0}
                         >
                             <i className="fas fa-shopping-cart"></i> Add To Cart

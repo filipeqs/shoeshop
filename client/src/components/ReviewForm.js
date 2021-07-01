@@ -83,7 +83,7 @@ const ReviewForm = () => {
                         </Button>
                     </Form>
                 ) : (
-                    <Message>
+                    <Message variant="info">
                         Please <Link to="/login">sign in</Link> to write a review
                     </Message>
                 )}

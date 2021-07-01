@@ -12,7 +12,7 @@ const ReviewList = () => {
     return (
         <Fragment>
             <h3>Recent Reviews</h3>
-            {reviews.length === 0 && <Message>No Reviews</Message>}
+            {reviews.length === 0 && <Message variant="info">No Reviews</Message>}
             <ListGroup variant="flush">
                 {reviews.map((review) => (
                     <ReviewDetails review={review} key={review._id} />

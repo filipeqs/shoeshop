@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -45,9 +45,9 @@ const HomeScreen = () => {
             </Row>
             <div className="product__btn">
                 {page < pages && (
-                    <Button variant="dark" onClick={loadMore}>
+                    <div className="btn btn-outline-dark" onClick={loadMore}>
                         Load More
-                    </Button>
+                    </div>
                 )}
             </div>
         </Fragment>

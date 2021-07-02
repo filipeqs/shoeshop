@@ -4,7 +4,6 @@ import { Row, Col, Breadcrumb } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-
 import RatingBars from '../components/RatingBars';
 import ReviewList from '../components/review-list/ReviewList';
 import ReviewForm from '../components/ReviewForm';

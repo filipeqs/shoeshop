@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, ListGroup, Image, Button, Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import compose from 'lodash/fp/compose';
 
 import Message from '../components/Message';
 
 import { addToCart, removeFromCart } from '../redux/actions/cartActions';
 
-const CartScreen = () => {
+const CartScreen = ({ history }) => {
     const dispatch = useDispatch();
 
     const { cartItems } = useSelector((state) => state.cart);
@@ -30,6 +31,21 @@ const CartScreen = () => {
 
     const handleRemoveFromCart = (selectedId) => {
         dispatch(removeFromCart(selectedId));
+    };
+
+    const fixed = (number) => number.toFixed(2);
+
+    const getSubTotal = (qty, price) => Number(qty) * Number(price);
+
+    const getSubTotalFixed = compose([fixed, getSubTotal]);
+
+    const getTotal = () =>
+        cartItems.reduce((acc, cartItem) => cartItem.qty * cartItem.price + acc, 0);
+
+    const getTotalFixed = compose([fixed, getTotal]);
+
+    const handleCheckout = () => {
+        history.push('/login?redirect=checkout/shipping');
     };
 
     return (
@@ -99,14 +115,32 @@ const CartScreen = () => {
                                         </button>
                                     </Col>
                                     <Col md={2} className="text-center">
-                                        ${Number(cartItem.qty) * Number(cartItem.price)}
+                                        ${getSubTotalFixed(cartItem.qty, cartItem.price)}
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
                         ))}
-                        <ListGroup variant="flush"></ListGroup>
+                        <ListGroup.Item variant="flush">
+                            <Row>
+                                <Col md={8}>
+                                    <Link to="/" className="cart__link">
+                                        Continue shopping
+                                    </Link>
+                                </Col>
+                                <Col md={2}>
+                                    <h4 className="margin-none">Total</h4>
+                                </Col>
+                                <Col md={2} className="text-center margin-none">
+                                    <h4 className="margin-none">${getTotalFixed()}</h4>
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
 
-                        <Button variant="dark" className="float-right mt-4">
+                        <Button
+                            variant="dark"
+                            className="float-right mt-4"
+                            onClick={handleCheckout}
+                        >
                             Checkout
                         </Button>
                     </Fragment>

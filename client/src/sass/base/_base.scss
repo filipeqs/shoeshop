@@ -14,3 +14,7 @@ body {
     box-sizing: border-box;
     padding-top: 8rem;
 }
+
+.wrapper {
+    height: calc(100vh - 80px);
+}

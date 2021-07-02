@@ -30,4 +30,15 @@
             margin-top: 0.5rem;
         }
     }
+
+    &__link {
+        opacity: 0.5;
+        text-decoration: underline;
+        transition: all 0.1s ease-in;
+
+        &:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+    }
 }

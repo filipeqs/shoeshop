@@ -77,10 +77,10 @@ const CartScreen = ({ history }) => {
                         </ListGroup.Item>
 
                         {cartItems.map((cartItem) => (
-                            <ListGroup.Item key={cartItem._id}>
+                            <ListGroup.Item key={cartItem.productId}>
                                 <Row className="cart__item">
                                     <Col md={2}>
-                                        <Link to={`/product/${cartItem._id}`}>
+                                        <Link to={`/product/${cartItem.productId}`}>
                                             <Image src={cartItem.image} alt={cartItem.name} fluid />
                                         </Link>
                                     </Col>

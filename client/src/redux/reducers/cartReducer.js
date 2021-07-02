@@ -27,8 +27,6 @@ export const cartReducer = (
                 (cartItem) => cartItem.selectedId === itemToAdd.selectedId,
             );
 
-            console.log(existItem);
-
             if (existItem) {
                 return {
                     ...state,

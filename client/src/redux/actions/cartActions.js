@@ -8,7 +8,17 @@ import {
 export const addToCart = (product) => (dispatch, getState) => {
     dispatch({
         type: CART_ADD_ITEM,
-        payload: product,
+        payload: {
+            _id: product._id,
+            productId: product._id,
+            name: product.name,
+            image: product.image,
+            price: product.price,
+            count: product.count,
+            qty: product.qty,
+            size: product.size,
+            selectedId: product.selectedId,
+        },
     });
 
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));

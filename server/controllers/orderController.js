@@ -36,4 +36,32 @@ const addOrderItems = async (req, res, next) => {
     }
 };
 
-module.exports = { addOrderItems };
+// @desc    Get Logged in User Orders
+// @route   GET /api/orders/myorders
+// @access  Private
+const getMyOrders = async (req, res, next) => {
+    try {
+        const orders = await Order.find({ user: req.user._id });
+
+        return res.send(orders);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get Order by ID
+// @route   GET /api/orders/:id
+// @access  Private
+const getOrderById = async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+        if (!order) throw new NotFound('Order not found!');
+
+        return res.send(order);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { addOrderItems, getMyOrders, getOrderById };

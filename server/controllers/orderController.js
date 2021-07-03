@@ -64,4 +64,17 @@ const getOrderById = async (req, res, next) => {
     }
 };
 
-module.exports = { addOrderItems, getMyOrders, getOrderById };
+// @desc    Get All Orders
+// @route   GET /api/orders/
+// @access  Private/Admin
+const getOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}).populate('user', 'id name');
+
+        return res.send(orders);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { addOrderItems, getMyOrders, getOrderById, getOrders };

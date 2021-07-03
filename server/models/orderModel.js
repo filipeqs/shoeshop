@@ -53,6 +53,10 @@ const orderSchema = mongoose.Schema(
                 type: String,
                 required: true,
             },
+            state: {
+                type: String,
+                require: true,
+            },
         },
         paymentMethod: {
             type: String,
@@ -63,6 +67,11 @@ const orderSchema = mongoose.Schema(
             status: { type: String },
             update_time: { type: String },
             email_address: { type: String },
+        },
+        subtotal: {
+            type: Number,
+            required: true,
+            default: 0.0,
         },
         taxPrice: {
             type: Number,

@@ -9,7 +9,7 @@ import {
 } from './reducers/productReducers';
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { cartReducer } from './reducers/cartReducer';
-import { orderCreateReducer } from './reducers/orderReducer';
+import { orderCreateReducer, orderDetailsReducer } from './reducers/orderReducer';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -19,6 +19,7 @@ const reducer = combineReducers({
     productReviewCreate: productReviewCreateReducer,
     productReviewList: productReviewListRecuder,
     cart: cartReducer,
+    orderDetails: orderDetailsReducer,
     orderCreate: orderCreateReducer,
 });
 

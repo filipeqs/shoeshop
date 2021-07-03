@@ -16,13 +16,13 @@ const PlaceOrderScreen = ({ history }) => {
     const addDecimals = (num) => {
         return (Math.round(num * 100) / 100).toFixed(2);
     };
-    cart.itemsPrice = addDecimals(
+    cart.subtotal = addDecimals(
         cart.cartItems.reduce((acc, item) => acc + item.qty * item.price, 0),
     );
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
-    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+    cart.shippingPrice = addDecimals(cart.subtotal > 100 ? 0 : 100);
+    cart.taxPrice = addDecimals(Number((0.15 * cart.subtotal).toFixed(2)));
     cart.totalPrice = (
-        Number(cart.itemsPrice) +
+        Number(cart.subtotal) +
         Number(cart.shippingPrice) +
         Number(cart.taxPrice)
     ).toFixed(2);
@@ -46,7 +46,7 @@ const PlaceOrderScreen = ({ history }) => {
                 orderItems: cart.cartItems,
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
-                itemsPrice: cart.itemsPrice,
+                subtotal: cart.subtotal,
                 shippingPrice: cart.shippingPrice,
                 taxPrice: cart.taxPrice,
                 totalPrice: cart.totalPrice,

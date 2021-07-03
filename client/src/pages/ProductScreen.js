@@ -31,19 +31,18 @@ const ProductScreen = ({ match }) => {
 
     return (
         <Fragment>
+            <Breadcrumb>
+                <LinkContainer to="/">
+                    <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                </LinkContainer>
+                <Breadcrumb.Item active>Product</Breadcrumb.Item>
+            </Breadcrumb>
             {loadingProduct ? (
                 <Loader />
             ) : error ? (
                 <Message variant="danger">{error}</Message>
             ) : (
                 <Fragment>
-                    <Breadcrumb>
-                        <LinkContainer to="/">
-                            <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                        </LinkContainer>
-                        <Breadcrumb.Item active>Product</Breadcrumb.Item>
-                    </Breadcrumb>
-
                     <Row>
                         <ProductDetails />
                     </Row>

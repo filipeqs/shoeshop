@@ -58,6 +58,9 @@ const getOrderById = async (req, res, next) => {
 
         if (!order) throw new NotFound('Order not found!');
 
+        if (order.user._id.toString() !== req.user._id.toString() && !req.user.isAdmin)
+            throw new NotFound('Order not found!');
+
         return res.send(order);
     } catch (error) {
         next(error);

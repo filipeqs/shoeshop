@@ -49,7 +49,7 @@ const CartScreen = ({ history }) => {
     };
 
     return (
-        <Fragment>
+        <div className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -138,7 +138,7 @@ const CartScreen = ({ history }) => {
                     </Button>
                 </Fragment>
             )}
-        </Fragment>
+        </div>
     );
 };
 

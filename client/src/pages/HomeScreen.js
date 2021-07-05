@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect, Fragment } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
@@ -34,7 +34,7 @@ const HomeScreen = () => {
     return loading && firstLoad ? (
         <Loader />
     ) : (
-        <Fragment>
+        <div className="wrapper">
             {error && <Message variant="danger">{error}</Message>}
             <Row>
                 {products.map((product) => (
@@ -50,7 +50,7 @@ const HomeScreen = () => {
                     </div>
                 )}
             </div>
-        </Fragment>
+        </div>
     );
 };
 

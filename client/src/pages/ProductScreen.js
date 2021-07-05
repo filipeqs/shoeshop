@@ -29,7 +29,7 @@ const ProductScreen = ({ match }) => {
     }, [match.params.id, dispatch, successProductReview]);
 
     return (
-        <Fragment>
+        <div className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -62,7 +62,7 @@ const ProductScreen = ({ match }) => {
                     )}
                 </Fragment>
             )}
-        </Fragment>
+        </div>
     );
 };
 

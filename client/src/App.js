@@ -11,6 +11,7 @@ import CheckoutScreen from './pages/CheckoutScreen';
 import OrderScreen from './pages/OrderScreen';
 import OrderListScreen from './pages/OrderListScreen';
 import ReviewProductScreen from './pages/ReviewProductScreen';
+import Footer from './layout/Footer';
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                 <Route exact path="/orders" component={OrderListScreen} />
                 <Route path="/orders/:id" component={OrderScreen} />
             </Container>
+            <Footer />
         </Router>
     );
 };

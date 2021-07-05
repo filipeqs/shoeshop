@@ -25,7 +25,7 @@ const OrderListScreen = ({ history }) => {
     }, [dispatch, history, userInfo]);
 
     return (
-        <Fragment>
+        <div className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -78,7 +78,7 @@ const OrderListScreen = ({ history }) => {
                     )}
                 </Fragment>
             )}
-        </Fragment>
+        </div>
     );
 };
 

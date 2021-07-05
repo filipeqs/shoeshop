@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Row, Col, Breadcrumb } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -6,7 +6,7 @@ import ReviewForm from '../components/ReviewForm';
 
 const ReviewProductScreen = () => {
     return (
-        <Fragment>
+        <div className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -21,7 +21,7 @@ const ReviewProductScreen = () => {
                     <ReviewForm />
                 </Col>
             </Row>
-        </Fragment>
+        </div>
     );
 };
 

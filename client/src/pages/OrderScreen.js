@@ -64,7 +64,7 @@ const OrderScreen = ({ match, history }) => {
     };
 
     return (
-        <Fragment>
+        <div className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -182,7 +182,7 @@ const OrderScreen = ({ match, history }) => {
                     )}
                 </Fragment>
             )}
-        </Fragment>
+        </div>
     );
 };
 

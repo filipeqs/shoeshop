@@ -4,13 +4,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Row, Col, Breadcrumb, ListGroup, Image } from 'react-bootstrap';
+import { Row, Col, Breadcrumb, ListGroup, Image, Button } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
-import { getOrderById, payOrder } from '../redux/actions/orderActions';
-import { ORDER_PAY_RESET } from '../redux/constants/orderConstants';
+import { getOrderById, payOrder, deliverOrder } from '../redux/actions/orderActions';
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../redux/constants/orderConstants';
 
 const OrderScreen = ({ match, history }) => {
     const dispatch = useDispatch();
@@ -23,6 +23,9 @@ const OrderScreen = ({ match, history }) => {
 
     const orderPay = useSelector((state) => state.orderPay);
     const { success: successPay, loading: loadingPay } = orderPay;
+
+    const orderDeliver = useSelector((state) => state.orderDeliver);
+    const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
 
     const addPayPalScript = async () => {
         const { data: clientId } = await axios.get('/api/config/paypal');
@@ -48,11 +51,16 @@ const OrderScreen = ({ match, history }) => {
 
         return () => {
             dispatch({ type: ORDER_PAY_RESET });
+            dispatch({ type: ORDER_DELIVER_RESET });
         };
-    }, [dispatch, history, match.params.id, userInfo, successPay]);
+    }, [dispatch, history, match.params.id, userInfo, successPay, successDeliver]);
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(match.params.id, paymentResult));
+    };
+
+    const deliverHandler = () => {
+        dispatch(deliverOrder(order));
     };
 
     return (
@@ -168,6 +176,23 @@ const OrderScreen = ({ match, history }) => {
                                             onSuccess={successPaymentHandler}
                                         />
                                     )}
+                                </ListGroup.Item>
+                            </Col>
+                        </Row>
+                    )}
+                    {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                        <Row className="mt-4">
+                            <Col md={{ span: 4, offset: 8 }}>
+                                <ListGroup.Item>
+                                    {loadingDeliver && <Loader />}
+                                    <Button
+                                        type="button"
+                                        className="btn btn-block"
+                                        disabled={loadingDeliver}
+                                        onClick={deliverHandler}
+                                    >
+                                        Mark as Delivered
+                                    </Button>
                                 </ListGroup.Item>
                             </Col>
                         </Row>

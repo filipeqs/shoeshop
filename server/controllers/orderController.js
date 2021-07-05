@@ -92,23 +92,48 @@ const updateOrderToPaid = async (req, res) => {
         if (order.user._id.toString() !== req.user._id.toString() && !req.user.isAdmin)
             throw new NotFound('Order not found!');
 
-        if (order) {
-            order.isPaid = true;
-            order.paidAt = Date.now();
-            order.paymentResult = {
-                id: req.body.id,
-                status: req.body.status,
-                update_time: req.body.update_time,
-                email_address: req.body.payer.email_address,
-            };
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.payer.email_address,
+        };
 
-            const updatedOrder = await order.save();
+        const updatedOrder = await order.save();
 
-            return res.send(updatedOrder);
-        }
+        return res.send(updatedOrder);
     } catch (error) {
         next(error);
     }
 };
 
-module.exports = { addOrderItems, getMyOrders, getOrderById, getOrders, updateOrderToPaid };
+// @desc    Update order to Delivered
+// @route   PUT /api/orders/:id/deliver
+// @access  Private/Admin
+const updateOrderToDelivered = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+
+        if (!order) throw new NotFound('Order not found');
+
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+
+        const updatedOrder = await order.save();
+
+        return res.send(updatedOrder);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = {
+    addOrderItems,
+    getMyOrders,
+    getOrderById,
+    getOrders,
+    updateOrderToPaid,
+    updateOrderToDelivered,
+};

@@ -13,6 +13,7 @@ import {
     orderCreateReducer,
     orderDeliverReducer,
     orderDetailsReducer,
+    orderListMyReducer,
     orderPayReducer,
 } from './reducers/orderReducer';
 
@@ -28,6 +29,7 @@ const reducer = combineReducers({
     orderCreate: orderCreateReducer,
     orderPay: orderPayReducer,
     orderDeliver: orderDeliverReducer,
+    orderListMy: orderListMyReducer,
 });
 
 const middleware = [thunk];

@@ -1,3 +1,9 @@
 .btn {
-    padding: 1.5rem;
+    &-whitesome {
+        background-color: whitesmoke;
+
+        &:hover {
+            background-color: darken(whitesmoke, 5%);
+        }
+    }
 }

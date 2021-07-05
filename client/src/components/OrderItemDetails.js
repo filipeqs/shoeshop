@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup, Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const OrderItemDetails = ({ orderItem }) => {
+const OrderItemDetails = ({ orderItem, isDelivered }) => {
     return (
         <ListGroup.Item>
             <Row>
@@ -24,12 +24,19 @@ const OrderItemDetails = ({ orderItem }) => {
                     <div>${orderItem.price}</div>
                 </Col>
                 <Col md={6}>
-                    <Link
-                        to={`/product/${orderItem.productId}`}
-                        className="float-right btn btn-outline-dark"
-                    >
-                        View Product
-                    </Link>
+                    <div className="btn-group-vertical float-right">
+                        <Link to={`/product/${orderItem.productId}`} className="btn btn-info">
+                            View Product
+                        </Link>
+                        {isDelivered && (
+                            <Link
+                                to={`/product/${orderItem.productId}/review`}
+                                className="btn btn-warning mt-3"
+                            >
+                                Review Product
+                            </Link>
+                        )}
+                    </div>
                 </Col>
             </Row>
         </ListGroup.Item>

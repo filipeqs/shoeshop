@@ -42,17 +42,17 @@ const OrderScreen = ({ match, history }) => {
     useEffect(() => {
         if (!userInfo) {
             history.push('/login');
+        } else {
+            if (!window.paypal) addPayPalScript();
+            else setSdkReady(true);
+
+            dispatch(getOrderById(match.params.id));
+
+            return () => {
+                dispatch({ type: ORDER_PAY_RESET });
+                dispatch({ type: ORDER_DELIVER_RESET });
+            };
         }
-
-        if (!window.paypal) addPayPalScript();
-        else setSdkReady(true);
-
-        dispatch(getOrderById(match.params.id));
-
-        return () => {
-            dispatch({ type: ORDER_PAY_RESET });
-            dispatch({ type: ORDER_DELIVER_RESET });
-        };
     }, [dispatch, history, match.params.id, userInfo, successPay, successDeliver]);
 
     const successPaymentHandler = (paymentResult) => {
@@ -138,7 +138,11 @@ const OrderScreen = ({ match, history }) => {
                     </ListGroup>
                     <ListGroup className="mt-4">
                         {order.orderItems.map((orderItem) => (
-                            <OrderItemDetails orderItem={orderItem} key={orderItem._id} />
+                            <OrderItemDetails
+                                key={orderItem._id}
+                                orderItem={orderItem}
+                                isDelivered={order.isDelivered}
+                            />
                         ))}
                     </ListGroup>
 

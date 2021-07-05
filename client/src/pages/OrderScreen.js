@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Row, Col, Breadcrumb, ListGroup, Image, Button } from 'react-bootstrap';
+import { Row, Col, Breadcrumb, ListGroup, Button } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
 import { getOrderById, payOrder, deliverOrder } from '../redux/actions/orderActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../redux/constants/orderConstants';
+import OrderItemDetails from '../components/OrderItemDetails';
 
 const OrderScreen = ({ match, history }) => {
     const dispatch = useDispatch();
@@ -138,28 +138,7 @@ const OrderScreen = ({ match, history }) => {
                     </ListGroup>
                     <ListGroup className="mt-4">
                         {order.orderItems.map((orderItem) => (
-                            <ListGroup.Item key={orderItem._id}>
-                                <Row>
-                                    <Col md={2}>
-                                        <Link to={`/product/${orderItem.productId}`}>
-                                            <Image
-                                                src={orderItem.image}
-                                                alt={orderItem.name}
-                                                fluid
-                                                className="bg-whitesmoke"
-                                            />
-                                        </Link>
-                                    </Col>
-                                    <Col md={4}>
-                                        <Link to={`/product/${orderItem.productId}`}>
-                                            <h4>{orderItem.name}</h4>
-                                        </Link>
-                                        <div>Size: {orderItem.size}</div>
-                                        <div>${orderItem.price}</div>
-                                    </Col>
-                                    <Col md={4}>Buttons</Col>
-                                </Row>
-                            </ListGroup.Item>
+                            <OrderItemDetails orderItem={orderItem} key={orderItem._id} />
                         ))}
                     </ListGroup>
 

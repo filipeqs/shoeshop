@@ -158,6 +158,19 @@ const getReviewsByProductId = async (req, res, next) => {
     }
 };
 
+// @desc    Get top rated products
+// @route   GET /api/products/top
+// @access  Public
+const getTopProducts = async (req, res, next) => {
+    try {
+        const products = await Product.find().sort({ rating: -1 }).limit(3);
+
+        res.send(products);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
@@ -165,4 +178,5 @@ module.exports = {
     updateProduct,
     createProductReview,
     getReviewsByProductId,
+    getTopProducts,
 };

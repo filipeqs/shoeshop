@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Breadcrumb } from 'react-bootstrap';
+import { Row, Col, Breadcrumb, Container } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -29,7 +29,7 @@ const ProductScreen = ({ match }) => {
     }, [match.params.id, dispatch, successProductReview]);
 
     return (
-        <div className="wrapper">
+        <Container className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -62,7 +62,7 @@ const ProductScreen = ({ match }) => {
                     )}
                 </Fragment>
             )}
-        </div>
+        </Container>
     );
 };
 

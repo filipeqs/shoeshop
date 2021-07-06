@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { PayPalButton } from 'react-paypal-button-v2';
-import { Row, Col, Breadcrumb, ListGroup, Button } from 'react-bootstrap';
+import { Row, Col, Breadcrumb, ListGroup, Button, Container } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -64,7 +64,7 @@ const OrderScreen = ({ match, history }) => {
     };
 
     return (
-        <div className="wrapper">
+        <Container className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -182,7 +182,7 @@ const OrderScreen = ({ match, history }) => {
                     )}
                 </Fragment>
             )}
-        </div>
+        </Container>
     );
 };
 

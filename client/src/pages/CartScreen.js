@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, ListGroup, Image, Button, Breadcrumb } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Button, Breadcrumb, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import compose from 'lodash/fp/compose';
@@ -49,7 +49,7 @@ const CartScreen = ({ history }) => {
     };
 
     return (
-        <div className="wrapper">
+        <Container className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -138,7 +138,7 @@ const CartScreen = ({ history }) => {
                     </Button>
                 </Fragment>
             )}
-        </div>
+        </Container>
     );
 };
 

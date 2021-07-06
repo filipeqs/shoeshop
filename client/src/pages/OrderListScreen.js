@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Breadcrumb, ListGroup, Row, Col } from 'react-bootstrap';
+import { Breadcrumb, ListGroup, Row, Col, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const OrderListScreen = ({ history }) => {
     }, [dispatch, history, userInfo]);
 
     return (
-        <div className="wrapper">
+        <Container className="wrapper">
             <Breadcrumb>
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
@@ -78,7 +78,7 @@ const OrderListScreen = ({ history }) => {
                     )}
                 </Fragment>
             )}
-        </div>
+        </Container>
     );
 };
 

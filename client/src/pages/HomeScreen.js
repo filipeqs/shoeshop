@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
+import ProductCarousel from '../components/ProductCarousel';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Product from '../components/Product';
@@ -35,21 +36,25 @@ const HomeScreen = () => {
         <Loader />
     ) : (
         <div className="wrapper">
-            {error && <Message variant="danger">{error}</Message>}
-            <Row>
-                {products.map((product) => (
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product product={product} />
-                    </Col>
-                ))}
-            </Row>
-            <div className="product__btn">
-                {page < pages && (
-                    <div className="btn btn-outline-dark" onClick={loadMore}>
-                        Load More
-                    </div>
-                )}
-            </div>
+            <ProductCarousel />
+
+            <Container>
+                {error && <Message variant="danger">{error}</Message>}
+                <Row>
+                    {products.map((product) => (
+                        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                            <Product product={product} />
+                        </Col>
+                    ))}
+                </Row>
+                <div className="product__btn">
+                    {page < pages && (
+                        <div className="btn btn-outline-dark" onClick={loadMore}>
+                            Load More
+                        </div>
+                    )}
+                </div>
+            </Container>
         </div>
     );
 };

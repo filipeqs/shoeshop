@@ -26,29 +26,34 @@ const HomeScreen = () => {
         setFirstLoad(false);
     };
 
-    return loading && firstLoad ? (
-        <Loader />
-    ) : (
+    return (
         <div className="wrapper">
-            <ProductCarousel />
+            {loading && firstLoad ? (
+                <Loader />
+            ) : (
+                <>
+                    <ProductCarousel />
 
-            <Container>
-                {error && <Message variant="danger">{error}</Message>}
-                <Row>
-                    {products.map((product) => (
-                        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                            <Product product={product} />
-                        </Col>
-                    ))}
-                </Row>
-                <div className="product__btn">
-                    {page < pages && (
-                        <div className="btn btn-outline-dark" onClick={loadMore}>
-                            Load More
+                    <Container>
+                        {error && <Message variant="danger">{error}</Message>}
+                        <Row>
+                            {products.map((product) => (
+                                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                    <Product product={product} />
+                                </Col>
+                            ))}
+                        </Row>
+
+                        <div className="product__btn">
+                            {page < pages && (
+                                <div className="btn btn-outline-dark" onClick={loadMore}>
+                                    Load More
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            </Container>
+                    </Container>
+                </>
+            )}
         </div>
     );
 };

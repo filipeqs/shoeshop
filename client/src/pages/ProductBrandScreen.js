@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import ProductList from '../components/ProductList';
+import ProductJumbotron from '../components/ProductJumbotron';
 
 import { getProducts } from '../redux/actions/productActions';
 
@@ -28,15 +29,17 @@ const ProductBrandScreen = ({ match }) => {
     };
 
     return (
-        <Container className="wrapper">
-            <Breadcrumb>
-                <LinkContainer to="/">
-                    <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                </LinkContainer>
-                <Breadcrumb.Item active className="text-capitalize">
-                    {brand}
-                </Breadcrumb.Item>
-            </Breadcrumb>
+        <div className="wrapper">
+            <Container>
+                <Breadcrumb>
+                    <LinkContainer to="/">
+                        <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                    </LinkContainer>
+                    <Breadcrumb.Item active className="text-capitalize">
+                        {brand}
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </Container>
 
             {loading && firstLoad ? (
                 <Loader />
@@ -44,17 +47,20 @@ const ProductBrandScreen = ({ match }) => {
                 <Message variant="danger">{error}</Message>
             ) : (
                 <Fragment>
-                    <ProductList />
-                    <div className="product__btn">
-                        {page < pages && (
-                            <div className="btn btn-outline-dark" onClick={loadMore}>
-                                Load More
-                            </div>
-                        )}
-                    </div>
+                    <ProductJumbotron title={brand} text="Mens" />
+                    <Container>
+                        <ProductList />
+                        <div className="product__btn">
+                            {page < pages && (
+                                <div className="btn btn-outline-dark" onClick={loadMore}>
+                                    Load More
+                                </div>
+                            )}
+                        </div>
+                    </Container>
                 </Fragment>
             )}
-        </Container>
+        </div>
     );
 };
 

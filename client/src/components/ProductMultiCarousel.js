@@ -54,8 +54,8 @@ const ProductMultiCarousel = (props) => {
                 dotListClass="custom-dot-list-style"
             >
                 {products.map((product) => (
-                    <Container>
-                        <Product key={product._id} product={product} />
+                    <Container key={product._id}>
+                        <Product product={product} />
                     </Container>
                 ))}
             </Carousel>

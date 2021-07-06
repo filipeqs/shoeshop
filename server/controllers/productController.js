@@ -18,14 +18,24 @@ const getProducts = async (req, res, next) => {
         const page = Number(req.query.pageNumber) || 1;
         const sortParam = sorts[req.query.sortBy] || sorts['rating'];
 
-        const keyword = req.query.keyword
+        let keyword = req.query.keyword
             ? {
-                  brand: {
+                  name: {
                       $regex: req.query.keyword,
                       $options: 'i',
                   },
               }
             : {};
+
+        keyword = req.query.brand
+            ? {
+                  ...keyword,
+                  brand: {
+                      $regex: req.query.brand,
+                      $options: 'i',
+                  },
+              }
+            : { ...keyword };
 
         const count = await Product.countDocuments({ ...keyword });
         const products = await Product.find({ ...keyword })

@@ -25,13 +25,16 @@ const OrderItemDetails = ({ orderItem, isDelivered }) => {
                 </Col>
                 <Col md={6}>
                     <div className="btn-group-vertical float-right">
-                        <Link to={`/product/${orderItem.productId}`} className="btn btn-info">
+                        <Link
+                            to={`/product/${orderItem.productId}`}
+                            className="btn btn-info btn-sm"
+                        >
                             View Product
                         </Link>
                         {isDelivered && (
                             <Link
                                 to={`/product/${orderItem.productId}/review`}
-                                className="btn btn-warning mt-3"
+                                className="btn btn-warning btn-sm mt-3"
                             >
                                 Review Product
                             </Link>

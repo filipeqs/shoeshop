@@ -21,26 +21,30 @@ import {
     PRODUCT_RANDOM_FAIL,
 } from '../constants/productConstants';
 
-export const getProducts = (pageNumber) => async (dispatch) => {
-    try {
-        dispatch({ type: PRODUCT_LIST_REQUEST });
+export const getProducts =
+    (pageNumber = '', brand = '') =>
+    async (dispatch) => {
+        try {
+            dispatch({ type: PRODUCT_LIST_REQUEST });
 
-        const { data } = await axios.get(`/api/products?pageNumber=${pageNumber}`);
+            const { data } = await axios.get(
+                `/api/products?pageNumber=${pageNumber}&brand=${brand}`,
+            );
 
-        dispatch({
-            type: PRODUCT_LIST_SUCCESS,
-            payload: data,
-        });
-    } catch (error) {
-        dispatch({
-            type: PRODUCT_LIST_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-        });
-    }
-};
+            dispatch({
+                type: PRODUCT_LIST_SUCCESS,
+                payload: data,
+            });
+        } catch (error) {
+            dispatch({
+                type: PRODUCT_LIST_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        }
+    };
 
 export const resetProducts = () => (dispatch) => {
     dispatch({ type: PRODUCT_LIST_RESET });

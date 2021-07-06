@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Container } from 'react-bootstrap';
 
@@ -19,13 +19,11 @@ const HomeScreen = () => {
 
     useEffect(() => {
         dispatch(getProducts(pageNumber));
-    }, [dispatch, pageNumber]);
 
-    useLayoutEffect(() => {
         return () => {
             dispatch(resetProducts());
         };
-    }, [dispatch]);
+    }, [dispatch, pageNumber]);
 
     const loadMore = () => {
         setPageNumber(pageNumber + 1);

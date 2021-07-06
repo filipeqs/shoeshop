@@ -16,6 +16,9 @@ import {
     PRODUCT_TOP_FAIL,
     PRODUCT_TOP_SUCCESS,
     PRODUCT_TOP_REQUEST,
+    PRODUCT_RANDOM_REQUEST,
+    PRODUCT_RANDOM_SUCCESS,
+    PRODUCT_RANDOM_FAIL,
 } from '../constants/productConstants';
 
 export const getProducts = (pageNumber) => async (dispatch) => {
@@ -77,6 +80,27 @@ export const getTopProducts = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PRODUCT_TOP_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const getRandomProducts = () => async (dispatch) => {
+    try {
+        dispatch({ type: PRODUCT_RANDOM_REQUEST });
+
+        const { data } = await axios.get(`/api/products/random`);
+
+        dispatch({
+            type: PRODUCT_RANDOM_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_RANDOM_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

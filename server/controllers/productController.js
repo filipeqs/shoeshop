@@ -165,7 +165,25 @@ const getTopProducts = async (req, res, next) => {
     try {
         const products = await Product.find().sort({ rating: -1 }).limit(3);
 
-        res.send(products);
+        res.json(products);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get top rated products
+// @route   GET /api/products/random
+// @access  Public
+const getRandomProducts = async (req, res, next) => {
+    try {
+        const limit = 8;
+        const count = await Product.countDocuments();
+        let random = Math.floor(Math.random() * count);
+        random = random > count - limit ? 0 : random;
+
+        const products = await Product.find().skip(random).limit(limit);
+
+        res.json(products);
     } catch (error) {
         next(error);
     }
@@ -179,4 +197,5 @@ module.exports = {
     createProductReview,
     getReviewsByProductId,
     getTopProducts,
+    getRandomProducts,
 };

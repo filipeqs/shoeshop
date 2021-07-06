@@ -7,6 +7,7 @@ const {
     createProductReview,
     getReviewsByProductId,
     getTopProducts,
+    getRandomProducts,
 } = require('../controllers/productController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -15,6 +16,8 @@ const router = express.Router();
 router.route('/').get(getProducts).post(protect, admin, createProduct);
 
 router.get('/top', getTopProducts);
+
+router.get('/random', getRandomProducts);
 
 router.route('/:id').get(getProductById).put(protect, admin, updateProduct);
 

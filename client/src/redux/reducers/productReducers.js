@@ -16,6 +16,9 @@ import {
     PRODUCT_TOP_REQUEST,
     PRODUCT_TOP_SUCCESS,
     PRODUCT_TOP_FAIL,
+    PRODUCT_RANDOM_REQUEST,
+    PRODUCT_RANDOM_SUCCESS,
+    PRODUCT_RANDOM_FAIL,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -162,6 +165,35 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
                 products: payload,
             };
         case PRODUCT_TOP_FAIL:
+            return {
+                ...state,
+                loading: false,
+                products: [],
+                error: payload,
+            };
+
+        default:
+            return state;
+    }
+};
+
+export const productRandomReducer = (state = { products: [] }, action) => {
+    const { payload, type } = action;
+
+    switch (type) {
+        case PRODUCT_RANDOM_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                products: [],
+            };
+        case PRODUCT_RANDOM_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: payload,
+            };
+        case PRODUCT_RANDOM_FAIL:
             return {
                 ...state,
                 loading: false,

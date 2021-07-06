@@ -133,7 +133,7 @@ const CartScreen = ({ history }) => {
                         </Row>
                     </ListGroup.Item>
 
-                    <Button variant="dark" className="float-right mt-4" onClick={handleCheckout}>
+                    <Button variant="dark" className="mt-4" onClick={handleCheckout}>
                         Checkout
                     </Button>
                 </Fragment>

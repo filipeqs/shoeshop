@@ -31,12 +31,30 @@ const Header = () => {
                             <LinkContainer to="/product/releases">
                                 <Nav.Link>Releases</Nav.Link>
                             </LinkContainer>
+
                             <NavDropdown title="brand" id="brand">
+                                <LinkContainer to="/product/brand/adidas">
+                                    <NavDropdown.Item>Adidas</NavDropdown.Item>
+                                </LinkContainer>
+
+                                <LinkContainer to="/product/brand/all-star">
+                                    <NavDropdown.Item>All Star</NavDropdown.Item>
+                                </LinkContainer>
+
+                                <LinkContainer to="/product/brand/fila">
+                                    <NavDropdown.Item>Fila</NavDropdown.Item>
+                                </LinkContainer>
+
+                                <LinkContainer to="/product/brand/new-balance">
+                                    <NavDropdown.Item>New Balance</NavDropdown.Item>
+                                </LinkContainer>
+
                                 <LinkContainer to="/product/brand/nike">
                                     <NavDropdown.Item>Nike</NavDropdown.Item>
                                 </LinkContainer>
-                                <LinkContainer to="/product/brand/adidas">
-                                    <NavDropdown.Item>Adidas</NavDropdown.Item>
+
+                                <LinkContainer to="/product/brand/puma">
+                                    <NavDropdown.Item>Puma</NavDropdown.Item>
                                 </LinkContainer>
                             </NavDropdown>
                         </Nav>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Breadcrumb, Container, Row, Col } from 'react-bootstrap';
+import { Breadcrumb, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import Product from '../components/Product';
+import ProductList from '../components/ProductList';
 
-import { getProducts, resetProducts } from '../redux/actions/productActions';
+import { getProducts } from '../redux/actions/productActions';
 
 const ProductBrandScreen = ({ match }) => {
     const dispatch = useDispatch();
@@ -16,14 +16,10 @@ const ProductBrandScreen = ({ match }) => {
     const [pageNumber, setPageNumber] = useState(1);
 
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products, page, pages } = productList;
+    const { loading, error, page, pages } = productList;
 
     useEffect(() => {
         dispatch(getProducts(pageNumber, brand));
-
-        return () => {
-            dispatch(resetProducts());
-        };
     }, [dispatch, pageNumber, brand]);
 
     const loadMore = () => {
@@ -47,14 +43,8 @@ const ProductBrandScreen = ({ match }) => {
             ) : error ? (
                 <Message variant="danger">{error}</Message>
             ) : (
-                <>
-                    <Row>
-                        {products.map((product) => (
-                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                <Product product={product} />
-                            </Col>
-                        ))}
-                    </Row>
+                <Fragment>
+                    <ProductList />
                     <div className="product__btn">
                         {page < pages && (
                             <div className="btn btn-outline-dark" onClick={loadMore}>
@@ -62,7 +52,7 @@ const ProductBrandScreen = ({ match }) => {
                             </div>
                         )}
                     </div>
-                </>
+                </Fragment>
             )}
         </Container>
     );

@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Product from '../components/Product';
 
-import { getProducts, resetProducts } from '../redux/actions/productActions';
+import { getProducts } from '../redux/actions/productActions';
 
 const HomeScreen = () => {
     const dispatch = useDispatch();
@@ -19,10 +19,6 @@ const HomeScreen = () => {
 
     useEffect(() => {
         dispatch(getProducts(pageNumber));
-
-        return () => {
-            dispatch(resetProducts());
-        };
     }, [dispatch, pageNumber]);
 
     const loadMore = () => {

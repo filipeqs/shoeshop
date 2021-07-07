@@ -1,0 +1,23 @@
+.profile {
+    &-card {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &:hover {
+            background-color: whitesmoke;
+        }
+
+        &__link {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &__icon {
+            font-size: 3rem;
+        }
+    }
+}

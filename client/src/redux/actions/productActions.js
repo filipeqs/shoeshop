@@ -20,6 +20,7 @@ import {
     PRODUCT_RANDOM_SUCCESS,
     PRODUCT_RANDOM_FAIL,
 } from '../constants/productConstants';
+import { setAlert } from './alertActions';
 
 export const getProducts =
     (pageNumber = '', brand = '') =>
@@ -133,6 +134,8 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
         dispatch({
             type: PRODUCT_CREATE_REVIEW_SUCCESS,
         });
+
+        dispatch(setAlert('Review Submited', 'success'));
     } catch (error) {
         dispatch({
             type: PRODUCT_CREATE_REVIEW_FAIL,

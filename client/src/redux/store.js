@@ -23,6 +23,7 @@ import {
     orderListMyReducer,
     orderPayReducer,
 } from './reducers/orderReducer';
+import { alertsReducer } from './reducers/alertReducer';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -41,6 +42,7 @@ const reducer = combineReducers({
     orderPay: orderPayReducer,
     orderDeliver: orderDeliverReducer,
     orderListMy: orderListMyReducer,
+    alerts: alertsReducer,
 });
 
 const middleware = [thunk];

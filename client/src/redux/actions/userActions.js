@@ -15,6 +15,7 @@ import {
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
 } from '../constants/userConstants';
+import { setAlert } from './alertActions';
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -135,6 +136,8 @@ export const updateUserProfileDetails = (user) => async (dispatch, getState) => 
             type: USER_LOGIN_SUCCESS,
             payload: data,
         });
+
+        dispatch(setAlert('User Updated', 'success'));
 
         localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {

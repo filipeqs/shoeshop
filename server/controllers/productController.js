@@ -160,7 +160,7 @@ const getReviewsByProductId = async (req, res, next) => {
 
         if (!product) throw new BadRequest('Product not found!');
 
-        const reviews = await Review.find({ product: req.params.id });
+        const reviews = await Review.find({ product: req.params.id }).sort({ createdAt: -1 });
 
         return res.json(reviews);
     } catch (error) {

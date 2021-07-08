@@ -14,6 +14,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import AlertMessage from '../components/AlertMessage';
 
 import { getUserDetails, updateUserProfileDetails } from '../redux/actions/userActions';
 import { USER_UPDATE_PROFILE_RESET } from '../redux/constants/userConstants';
@@ -77,6 +78,7 @@ const EditUserScreen = ({ history }) => {
                 <Col md={{ span: 6, offset: 3 }}>
                     {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
                     {message && <Message variant="danger">{message}</Message>}
+                    <AlertMessage />
                     <Form onSubmit={submitHandler}>
                         <ListGroup>
                             <ListGroup.Item>

@@ -106,6 +106,7 @@ const updateMyProfile = async (req, res, next) => {
             name: updatedUser.name,
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id),
         });
     } catch (error) {
         next(error);

@@ -30,6 +30,9 @@ const OrderListScreen = ({ history }) => {
                 <LinkContainer to="/">
                     <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
                 </LinkContainer>
+                <LinkContainer to="/profile">
+                    <Breadcrumb.Item href="#">Profile</Breadcrumb.Item>
+                </LinkContainer>
                 <Breadcrumb.Item active>Orders</Breadcrumb.Item>
             </Breadcrumb>
             {loading ? (

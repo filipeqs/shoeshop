@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Container } from 'react-bootstrap';
 
@@ -8,8 +8,9 @@ import Loader from '../components/Loader';
 import Product from '../components/Product';
 
 import { getProducts } from '../redux/actions/productActions';
+import { PRODUCT_LIST_RESET } from '../redux/constants/productConstants';
 
-const HomeScreen = () => {
+const HomeScreen = ({ location }) => {
     const dispatch = useDispatch();
     const [firstLoad, setFirstLoad] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
@@ -21,6 +22,12 @@ const HomeScreen = () => {
         dispatch(getProducts(pageNumber));
     }, [dispatch, pageNumber]);
 
+    useEffect(() => {
+        return () => {
+            dispatch({ type: PRODUCT_LIST_RESET });
+        };
+    }, [dispatch]);
+
     const loadMore = () => {
         setPageNumber(pageNumber + 1);
         setFirstLoad(false);
@@ -31,7 +38,7 @@ const HomeScreen = () => {
             {loading && firstLoad ? (
                 <Loader />
             ) : (
-                <>
+                <Fragment>
                     <ProductCarousel />
 
                     <Container>
@@ -47,12 +54,12 @@ const HomeScreen = () => {
                         <div className="product__btn">
                             {page < pages && (
                                 <div className="btn btn-outline-dark" onClick={loadMore}>
-                                    Load More
+                                    {loading ? 'Loading...' : 'Load More'}
                                 </div>
                             )}
                         </div>
                     </Container>
-                </>
+                </Fragment>
             )}
         </div>
     );

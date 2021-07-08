@@ -19,7 +19,7 @@ import AlertMessage from '../components/AlertMessage';
 import { getUserDetails, updateUserProfileDetails } from '../redux/actions/userActions';
 import { USER_UPDATE_PROFILE_RESET } from '../redux/constants/userConstants';
 
-const EditUserScreen = ({ history }) => {
+const EditProfileScreen = ({ history }) => {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -88,7 +88,7 @@ const EditUserScreen = ({ history }) => {
                                             <h5>Name</h5>
                                             <div>{user.name}</div>
                                         </Col>
-                                        <Col md={2}>
+                                        <Col md={2} className="d-flex align-items-center">
                                             <Accordion.Toggle
                                                 as={Button}
                                                 className="btn-sm"
@@ -121,7 +121,7 @@ const EditUserScreen = ({ history }) => {
                                             <h5>Email</h5>
                                             <div>{user.email}</div>
                                         </Col>
-                                        <Col md={2}>
+                                        <Col md={2} className="d-flex align-items-center">
                                             <Accordion.Toggle
                                                 as={Button}
                                                 className="btn-sm"
@@ -154,7 +154,7 @@ const EditUserScreen = ({ history }) => {
                                             <h5>Password</h5>
                                             <div>******</div>
                                         </Col>
-                                        <Col md={2}>
+                                        <Col md={2} className="d-flex align-items-center">
                                             <Accordion.Toggle
                                                 as={Button}
                                                 className="btn-sm"
@@ -205,4 +205,4 @@ const EditUserScreen = ({ history }) => {
     );
 };
 
-export default EditUserScreen;
+export default EditProfileScreen;

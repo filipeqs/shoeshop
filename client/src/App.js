@@ -13,7 +13,8 @@ import ReviewProductScreen from './pages/ReviewProductScreen';
 import Footer from './layout/Footer';
 import ProductBrandScreen from './pages/ProductBrandScreen';
 import ProfileScreen from './pages/ProfileScreen';
-import EditUserScreen from './pages/EditUserScreen';
+import EditProfileScreen from './pages/EditProfileScreen';
+import AdminScreen from './pages/AdminScreen';
 
 const App = () => {
     return (
@@ -28,9 +29,10 @@ const App = () => {
             <Route path="/cart" component={CartScreen} />
             <Route path="/checkout" component={CheckoutScreen} />
             <Route exact path="/profile" component={ProfileScreen} />
-            <Route exact path="/profile/edit/:id" component={EditUserScreen} />
+            <Route exact path="/profile/edit" component={EditProfileScreen} />
             <Route exact path="/orders" component={OrderListScreen} />
-            <Route path="/orders/:id" component={OrderScreen} />
+            <Route exact path="/orders/:id" component={OrderScreen} />
+            <Route exact path="/admin" component={AdminScreen} />
             <Footer />
         </Router>
     );

@@ -10,6 +10,12 @@ const Header = () => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
+    const userInfoIcon = userInfo && (
+        <span>
+            <i className="fas fa-user"></i> {userInfo.name}
+        </span>
+    );
+
     const handleLogout = () => {
         dispatch(logout());
     };
@@ -60,8 +66,16 @@ const Header = () => {
                         </Nav>
 
                         <Nav className="ml-auto">
+                            {userInfo && userInfo.isAdmin && (
+                                <LinkContainer to="/admin">
+                                    <Nav.Link>
+                                        <i className="fas fa-user-shield"></i> Admin
+                                    </Nav.Link>
+                                </LinkContainer>
+                            )}
+
                             {userInfo ? (
-                                <NavDropdown title={userInfo.name} id="username">
+                                <NavDropdown title={userInfoIcon} id="username">
                                     <LinkContainer to="/profile">
                                         <NavDropdown.Item>Porfile</NavDropdown.Item>
                                     </LinkContainer>

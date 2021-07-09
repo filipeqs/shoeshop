@@ -35,6 +35,7 @@ const App = () => {
             <Route exact path="/orders/:id" component={OrderScreen} />
             <Route exact path="/admin" component={AdminScreen} />
             <Route exact path="/admin/orderlist" component={AdminOrderListScreen} />
+            <Route exact path="/admin/orderlist/:pageNumber" component={AdminOrderListScreen} />
             <Footer />
         </Router>
     );

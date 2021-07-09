@@ -70,11 +70,31 @@ const getOrderById = async (req, res, next) => {
 // @desc    Get All Orders
 // @route   GET /api/orders/
 // @access  Private/Admin
-const getOrders = async (req, res) => {
+const getOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find({}).populate('user', 'id name');
+        const pageSize = 8;
+        const page = Number(req.query.pageNumber) || 1;
 
-        return res.send(orders);
+        let keyword = req.query.orderId
+            ? {
+                  _id: req.query.orderId,
+              }
+            : {};
+
+        keyword = req.query.userId
+            ? {
+                  ...keyword,
+                  user: req.query.userId,
+              }
+            : { ...keyword };
+
+        const count = await Order.countDocuments({ ...keyword });
+        const orders = await Order.find({ ...keyword })
+            .populate('user', 'id name')
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
+
+        return res.send({ orders, page, pages: Math.ceil(count / pageSize) });
     } catch (error) {
         next(error);
     }
@@ -83,7 +103,7 @@ const getOrders = async (req, res) => {
 // @desc    Update order to Paid
 // @route   PUT /api/orders/:id/pay
 // @access  Private
-const updateOrderToPaid = async (req, res) => {
+const updateOrderToPaid = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id).populate('user', 'name email');
 
@@ -112,7 +132,7 @@ const updateOrderToPaid = async (req, res) => {
 // @desc    Update order to Delivered
 // @route   PUT /api/orders/:id/deliver
 // @access  Private/Admin
-const updateOrderToDelivered = async (req, res) => {
+const updateOrderToDelivered = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
 

@@ -6,23 +6,26 @@ import { Link } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import Order from '../components/Order';
+import Paginate from '../components/Paginate';
 
 import { listOrders } from '../redux/actions/orderActions';
-import Order from '../components/Order';
 
-const AdminOrderListScreen = ({ history }) => {
+const AdminOrderListScreen = ({ history, match }) => {
     const dispatch = useDispatch();
+
+    const pageNumber = match.params.pageNumber || 1;
 
     const { userInfo } = useSelector((state) => state.userLogin);
 
     const orderList = useSelector((state) => state.orderList);
-    const { loading, error, orders } = orderList;
+    const { loading, error, orders, page, pages } = orderList;
 
     useEffect(() => {
         if (!userInfo) history.push('/login');
         else if (!userInfo.isAdmin) history.push('/');
-        else dispatch(listOrders());
-    }, [dispatch, history, userInfo]);
+        else dispatch(listOrders(pageNumber));
+    }, [dispatch, history, userInfo, pageNumber]);
 
     return (
         <Container className="wrapper">
@@ -44,10 +47,15 @@ const AdminOrderListScreen = ({ history }) => {
                     <h3>All Orders</h3>
                     {orders.length === 0 ? (
                         <Message>
-                            No orders <Link to="/">Go Back</Link>
+                            No orders <Link to="/admin">Go Back</Link>
                         </Message>
                     ) : (
-                        orders.map((order) => <Order key={order._id} order={order} />)
+                        <Fragment>
+                            {orders.map((order) => (
+                                <Order key={order._id} order={order} />
+                            ))}
+                            <Paginate page={page} pages={pages} link={'/admin/orderlist'} />
+                        </Fragment>
                     )}
                 </Fragment>
             )}

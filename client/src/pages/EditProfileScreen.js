@@ -76,6 +76,7 @@ const EditProfileScreen = ({ history }) => {
                 <Message variant="danger">{error}</Message>
             ) : (
                 <Col md={{ span: 6, offset: 3 }}>
+                    <h3>Edit Profile</h3>
                     {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
                     {message && <Message variant="danger">{message}</Message>}
                     <AlertMessage />

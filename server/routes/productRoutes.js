@@ -6,6 +6,7 @@ const {
     updateProduct,
     createProductReview,
     getReviewsByProductId,
+    getAllReviewsByProductId,
     getTopProducts,
     getRandomProducts,
 } = require('../controllers/productController');
@@ -22,5 +23,7 @@ router.get('/random', getRandomProducts);
 router.route('/:id').get(getProductById).put(protect, admin, updateProduct);
 
 router.route('/:id/reviews').get(getReviewsByProductId).post(protect, createProductReview);
+
+router.route('/:id/reviews/all').get(getAllReviewsByProductId);
 
 module.exports = router;

@@ -156,11 +156,40 @@ const createProductReview = async (req, res, next) => {
 // @access  Private
 const getReviewsByProductId = async (req, res, next) => {
     try {
+        const pageSize = 3;
+        const page = Number(req.query.pageNumber) || 1;
+
         const product = await Product.findById(req.params.id);
 
         if (!product) throw new BadRequest('Product not found!');
 
-        const reviews = await Review.find({ product: req.params.id }).sort({ createdAt: -1 });
+        const count = await Review.countDocuments({ product: req.params.id });
+        const reviews = await Review.find({ product: req.params.id })
+            .sort({ createdAt: -1 })
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
+
+        return res.json({
+            reviews,
+            page,
+            pages: Math.ceil(count / pageSize),
+            productId: req.params.id,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Get All Reviews By Product ID
+// @route   GET /api/products/:id/reviews/all
+// @access  Private
+const getAllReviewsByProductId = async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) throw new BadRequest('Product not found!');
+
+        const reviews = await Review.find({ product: req.params.id });
 
         return res.json(reviews);
     } catch (error) {
@@ -175,7 +204,7 @@ const getTopProducts = async (req, res, next) => {
     try {
         const products = await Product.find().sort({ rating: -1 }).limit(3);
 
-        res.json(products);
+        return res.json(products);
     } catch (error) {
         next(error);
     }
@@ -193,7 +222,7 @@ const getRandomProducts = async (req, res, next) => {
 
         const products = await Product.find().skip(random).limit(limit);
 
-        res.json(products);
+        return res.json(products);
     } catch (error) {
         next(error);
     }
@@ -205,6 +234,7 @@ module.exports = {
     createProduct,
     updateProduct,
     createProductReview,
+    getAllReviewsByProductId,
     getReviewsByProductId,
     getTopProducts,
     getRandomProducts,

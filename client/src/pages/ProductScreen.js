@@ -7,10 +7,10 @@ import Loader from '../components/Loader';
 import RatingBars from '../components/RatingBars';
 import ReviewList from '../components/review-list/ReviewList';
 import ProductDetails from '../components/ProductDetails';
-
-import { getProductById, getReviewsByProductId } from '../redux/actions/productActions';
-import { LinkContainer } from 'react-router-bootstrap';
 import ProductMultiCarousel from '../components/ProductMultiCarousel';
+
+import { getProductById } from '../redux/actions/productActions';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const ProductScreen = ({ match }) => {
     const dispatch = useDispatch();
@@ -18,15 +18,11 @@ const ProductScreen = ({ match }) => {
     const productDetails = useSelector((state) => state.productDetails);
     const { loading: loadingProduct, error, product } = productDetails;
 
-    const productReviewList = useSelector((state) => state.productReviewList);
-    const { loading: loadingReviews } = productReviewList;
-
     const productReviewCreate = useSelector((state) => state.productReviewCreate);
     const { success: successProductReview } = productReviewCreate;
 
     useEffect(() => {
         dispatch(getProductById(match.params.id));
-        dispatch(getReviewsByProductId(match.params.id));
     }, [match.params.id, dispatch, successProductReview]);
 
     return (
@@ -47,20 +43,15 @@ const ProductScreen = ({ match }) => {
                         <Row>
                             <ProductDetails />
                         </Row>
-                        {loadingReviews ? (
-                            <Loader />
-                        ) : (
-                            product &&
-                            product._id && (
-                                <Row className="mt-4">
-                                    <Col md={4}>
-                                        <RatingBars />
-                                    </Col>
-                                    <Col md={8}>
-                                        <ReviewList />
-                                    </Col>
-                                </Row>
-                            )
+                        {product && product._id && (
+                            <Row className="mt-4">
+                                <Col md={4}>
+                                    <RatingBars />
+                                </Col>
+                                <Col md={8}>
+                                    <ReviewList />
+                                </Col>
+                            </Row>
                         )}
                     </Fragment>
                 )}

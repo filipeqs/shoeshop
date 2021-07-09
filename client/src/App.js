@@ -27,6 +27,7 @@ const App = () => {
             <Route exact path="/product/brand/:brand" component={ProductBrandScreen} />
             <Route exact path="/product/:id" component={ProductScreen} />
             <Route exact path="/product/:id/review" component={ReviewProductScreen} />
+            <Route exact path="/product/:id/:pageNumber" component={ProductScreen} />
             <Route path="/cart" component={CartScreen} />
             <Route path="/checkout" component={CheckoutScreen} />
             <Route exact path="/profile" component={ProfileScreen} />

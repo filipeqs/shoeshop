@@ -19,6 +19,9 @@ import {
     PRODUCT_RANDOM_REQUEST,
     PRODUCT_RANDOM_SUCCESS,
     PRODUCT_RANDOM_FAIL,
+    PRODUCT_REVIEW_LIST_ALL_REQUEST,
+    PRODUCT_REVIEW_LIST_ALL_SUCCESS,
+    PRODUCT_REVIEW_LIST_ALL_FAIL,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -120,7 +123,7 @@ export const productReviewCreateReducer = (state = { success: false }, action) =
     }
 };
 
-export const productReviewListRecuder = (state = { reviews: [] }, action) => {
+export const productReviewListReducer = (state = { reviews: [] }, action) => {
     const { payload, type } = action;
 
     switch (type) {
@@ -135,9 +138,40 @@ export const productReviewListRecuder = (state = { reviews: [] }, action) => {
             return {
                 ...state,
                 loading: false,
-                reviews: payload,
+                reviews: payload.reviews,
+                pages: payload.pages,
+                page: payload.page,
+                productId: payload.productId,
             };
         case PRODUCT_REVIEW_LIST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: payload,
+            };
+        default:
+            return state;
+    }
+};
+
+export const productReviewListAllReducer = (state = { reviews: [] }, action) => {
+    const { payload, type } = action;
+
+    switch (type) {
+        case PRODUCT_REVIEW_LIST_ALL_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                reviews: [],
+            };
+        case PRODUCT_REVIEW_LIST_ALL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                reviews: payload,
+            };
+        case PRODUCT_REVIEW_LIST_ALL_FAIL:
             return {
                 ...state,
                 loading: false,

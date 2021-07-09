@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Breadcrumb, Container } from 'react-bootstrap';
+import { Breadcrumb, Container, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -13,6 +12,7 @@ import { listOrders } from '../redux/actions/orderActions';
 
 const AdminOrderListScreen = ({ history, match }) => {
     const dispatch = useDispatch();
+    const [orderSearch, setOrderSearch] = useState('');
 
     const pageNumber = match.params.pageNumber || 1;
 
@@ -27,6 +27,15 @@ const AdminOrderListScreen = ({ history, match }) => {
         else dispatch(listOrders(pageNumber));
     }, [dispatch, history, userInfo, pageNumber]);
 
+    const handleSearchOrder = () => {
+        dispatch(listOrders(pageNumber, orderSearch));
+    };
+
+    const handleClearSeach = () => {
+        dispatch(listOrders(1));
+        setOrderSearch('');
+    };
+
     return (
         <Container className="wrapper">
             <Breadcrumb>
@@ -40,15 +49,38 @@ const AdminOrderListScreen = ({ history, match }) => {
             </Breadcrumb>
             {loading ? (
                 <Loader />
-            ) : error ? (
-                <Message variant="danger">{error}</Message>
             ) : (
                 <Fragment>
                     <h3>All Orders</h3>
+                    {error && <Message variant="danger">{error}</Message>}
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            placeholder="Search by Order ID"
+                            aria-label="Search by Order ID"
+                            aria-describedby="basic-addon2"
+                            value={orderSearch}
+                            onChange={(e) => setOrderSearch(e.target.value)}
+                        />
+                        <InputGroup.Append>
+                            <Button
+                                variant="outline-dark"
+                                className="btn-sm"
+                                onClick={handleSearchOrder}
+                                disabled={!orderSearch}
+                            >
+                                <i className="fas fa-search pr-4 pl-4"></i>
+                            </Button>
+                        </InputGroup.Append>
+                        <Button
+                            variant="outline-dark"
+                            className="btn-sm"
+                            onClick={handleClearSeach}
+                        >
+                            Clear Search
+                        </Button>
+                    </InputGroup>
                     {orders.length === 0 ? (
-                        <Message>
-                            No orders <Link to="/admin">Go Back</Link>
-                        </Message>
+                        <Message>No orders</Message>
                     ) : (
                         <Fragment>
                             {orders.map((order) => (

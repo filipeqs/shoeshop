@@ -81,18 +81,12 @@ const getOrders = async (req, res, next) => {
               }
             : {};
 
-        keyword = req.query.userId
-            ? {
-                  ...keyword,
-                  user: req.query.userId,
-              }
-            : { ...keyword };
-
         const count = await Order.countDocuments({ ...keyword });
         const orders = await Order.find({ ...keyword })
             .populate('user', 'id name')
             .limit(pageSize)
-            .skip(pageSize * (page - 1));
+            .skip(pageSize * (page - 1))
+            .sort({ createdAt: -1 });
 
         return res.send({ orders, page, pages: Math.ceil(count / pageSize) });
     } catch (error) {

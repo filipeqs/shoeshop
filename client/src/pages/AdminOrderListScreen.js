@@ -14,25 +14,26 @@ const AdminOrderListScreen = ({ history, match }) => {
     const dispatch = useDispatch();
     const [orderSearch, setOrderSearch] = useState('');
 
-    const pageNumber = match.params.pageNumber || 1;
-
     const { userInfo } = useSelector((state) => state.userLogin);
 
     const orderList = useSelector((state) => state.orderList);
     const { loading, error, orders, page, pages } = orderList;
 
+    const pageNumber = match.params.pageNumber || 1;
+    const orderNumber = match.params.orderNumber || '';
+
     useEffect(() => {
         if (!userInfo) history.push('/login');
         else if (!userInfo.isAdmin) history.push('/');
-        else dispatch(listOrders(pageNumber));
-    }, [dispatch, history, userInfo, pageNumber]);
+        else dispatch(listOrders(pageNumber, orderNumber));
+    }, [dispatch, history, userInfo, pageNumber, orderNumber]);
 
     const handleSearchOrder = () => {
-        dispatch(listOrders(pageNumber, orderSearch));
+        history.push(`/admin/orderlist/search/${orderSearch}`);
     };
 
     const handleClearSeach = () => {
-        dispatch(listOrders(1));
+        history.push('/admin/orderlist');
         setOrderSearch('');
     };
 

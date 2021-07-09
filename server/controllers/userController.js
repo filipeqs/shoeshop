@@ -78,8 +78,23 @@ const getUserProfile = async (req, res, next) => {
 // @access  Private/Admin
 const getAllUsers = async (req, res, next) => {
     try {
-        const users = await User.find();
-        return res.json(users);
+        const pageSize = 8;
+        const page = Number(req.query.pageNumber) || 1;
+
+        let keyword = req.query.name
+            ? {
+                  name: {
+                      $regex: req.query.name,
+                      $options: 'i',
+                  },
+              }
+            : {};
+
+        const count = await User.countDocuments({ ...keyword });
+        const users = await User.find({ ...keyword })
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
+        return res.json({ users, page, pages: Math.ceil(count / pageSize) });
     } catch (error) {
         next(error);
     }

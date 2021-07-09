@@ -15,6 +15,9 @@ import {
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
     USER_DETAILS_RESET,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL,
 } from '../constants/userConstants';
 
 const userFromStorage = localStorage.getItem('userInfo')
@@ -146,6 +149,41 @@ export const userUpdateProfileReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 success: false,
+            };
+        default:
+            return state;
+    }
+};
+
+export const userListReducer = (
+    state = {
+        users: [],
+    },
+    action,
+) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case USER_LIST_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                users: [],
+            };
+        case USER_LIST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                users: payload.users,
+                pages: payload.pages,
+                page: payload.page,
+            };
+        case USER_LIST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: payload,
+                users: [],
             };
         default:
             return state;

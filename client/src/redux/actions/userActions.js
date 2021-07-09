@@ -14,6 +14,9 @@ import {
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL,
 } from '../constants/userConstants';
 import { setAlert } from './alertActions';
 
@@ -150,3 +153,39 @@ export const updateUserProfileDetails = (user) => async (dispatch, getState) => 
         });
     }
 };
+
+export const listUsers =
+    (pageNumber = '', name = '') =>
+    async (dispatch, getState) => {
+        try {
+            dispatch({ type: USER_LIST_REQUEST });
+
+            const {
+                userLogin: { userInfo },
+            } = getState();
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            };
+
+            const { data } = await axios.get(
+                `/api/users?pageNumber=${pageNumber}&name=${name}`,
+                config,
+            );
+
+            dispatch({
+                type: USER_LIST_SUCCESS,
+                payload: data,
+            });
+        } catch (error) {
+            dispatch({
+                type: USER_LIST_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        }
+    };

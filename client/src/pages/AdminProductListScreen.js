@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Breadcrumb, Container, InputGroup, FormControl, Button, Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -101,7 +102,6 @@ const AdminProductListScreen = ({ history, match }) => {
                                         <th>ID</th>
                                         <th>NAME</th>
                                         <th>PRICE</th>
-                                        <th>CATEGORY</th>
                                         <th>BRAND</th>
                                         <th></th>
                                     </tr>
@@ -112,16 +112,17 @@ const AdminProductListScreen = ({ history, match }) => {
                                             <td>{product._id}</td>
                                             <td>{product.name}</td>
                                             <td>${product.price}</td>
-                                            <td>{product.category}</td>
                                             <td>{product.brand}</td>
-                                            <td>
-                                                <LinkContainer
+                                            <td className="d-flex justify-content-around align-items-center">
+                                                <Link to={`/product/${product._id}`}>
+                                                    <i className="fas fa-eye"></i>
+                                                </Link>
+                                                <Link
                                                     to={`/admin/product/${product._id}/edit`}
+                                                    className="mr-2"
                                                 >
-                                                    <Button variant="light" className="btn-sm">
-                                                        <i className="fas fa-edit"></i>
-                                                    </Button>
-                                                </LinkContainer>
+                                                    <i className="fas fa-edit"></i>
+                                                </Link>
                                                 <Button
                                                     variant="danger"
                                                     className="btn-sm"

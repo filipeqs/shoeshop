@@ -9,6 +9,7 @@ const {
     getAllReviewsByProductId,
     getTopProducts,
     getRandomProducts,
+    deleteProduct,
 } = require('../controllers/productController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -20,7 +21,11 @@ router.get('/top', getTopProducts);
 
 router.get('/random', getRandomProducts);
 
-router.route('/:id').get(getProductById).put(protect, admin, updateProduct);
+router
+    .route('/:id')
+    .get(getProductById)
+    .put(protect, admin, updateProduct)
+    .delete(protect, admin, deleteProduct);
 
 router.route('/:id/reviews').get(getReviewsByProductId).post(protect, createProductReview);
 

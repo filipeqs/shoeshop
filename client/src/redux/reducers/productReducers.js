@@ -25,6 +25,9 @@ import {
     PRODUCT_LIST_ALL_REQUEST,
     PRODUCT_LIST_ALL_SUCCESS,
     PRODUCT_LIST_ALL_FAIL,
+    PRODUCT_DELETE_REQUEST,
+    PRODUCT_DELETE_SUCCESS,
+    PRODUCT_DELETE_FAIL,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -113,6 +116,34 @@ export const productDetailsReducer = (state = { product: { stock: [], reviews: [
             return {
                 ...state,
                 loading: false,
+                error: payload,
+            };
+        default:
+            return state;
+    }
+};
+
+export const productDeleteReducer = (state = {}, action) => {
+    const { payload, type } = action;
+
+    switch (type) {
+        case PRODUCT_DELETE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                success: false,
+            };
+        case PRODUCT_DELETE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: true,
+            };
+        case PRODUCT_DELETE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                success: false,
                 error: payload,
             };
         default:

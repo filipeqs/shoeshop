@@ -238,6 +238,26 @@ const getRandomProducts = async (req, res, next) => {
     }
 };
 
+// @desc    Delete a product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
+const deleteProduct = async (req, res, next) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) throw new BadRequest('Product not found!');
+
+        const reviews = await Review.find({ product: req.params.id });
+
+        await Review.deleteMany({ _id: reviews.map((review) => review._id) });
+
+        await product.remove();
+        return res.json({ msg: 'Product removed' });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getProducts,
     getProductById,
@@ -248,4 +268,5 @@ module.exports = {
     getReviewsByProductId,
     getTopProducts,
     getRandomProducts,
+    deleteProduct,
 };

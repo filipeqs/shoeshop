@@ -17,6 +17,7 @@ import EditProfileScreen from './pages/EditProfileScreen';
 import AdminScreen from './pages/AdminScreen';
 import AdminOrderListScreen from './pages/AdminOrderListScreen';
 import AdminUserListScreen from './pages/AdminUserListScreen';
+import AdminProductListScreen from './pages/AdminProductListScreen';
 
 const App = () => {
     return (
@@ -39,6 +40,23 @@ const App = () => {
             <Route exact path="/admin/userlist" component={AdminUserListScreen} />
             <Route exact path="/admin/userlist/:pageNumber" component={AdminUserListScreen} />
             <Route exact path="/admin/userlist/search/:userName" component={AdminUserListScreen} />
+            <Route
+                exact
+                path="/admin/userlist/search/:userName/:pageNumber"
+                component={AdminUserListScreen}
+            />
+            <Route exact path="/admin/productlist" component={AdminProductListScreen} />
+            <Route exact path="/admin/productlist/:pageNumber" component={AdminProductListScreen} />
+            <Route
+                exact
+                path="/admin/productlist/search/:productName"
+                component={AdminProductListScreen}
+            />
+            <Route
+                exact
+                path="/admin/productlist/search/:productName/:pageNumber"
+                component={AdminProductListScreen}
+            />
             <Route exact path="/admin/orderlist" component={AdminOrderListScreen} />
             <Route exact path="/admin/orderlist/:pageNumber" component={AdminOrderListScreen} />
             <Route

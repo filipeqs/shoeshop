@@ -22,6 +22,9 @@ import {
     PRODUCT_REVIEW_LIST_ALL_REQUEST,
     PRODUCT_REVIEW_LIST_ALL_SUCCESS,
     PRODUCT_REVIEW_LIST_ALL_FAIL,
+    PRODUCT_LIST_ALL_REQUEST,
+    PRODUCT_LIST_ALL_SUCCESS,
+    PRODUCT_LIST_ALL_FAIL,
 } from '../constants/productConstants';
 import { setAlert } from './alertActions';
 
@@ -42,6 +45,31 @@ export const getProducts =
         } catch (error) {
             dispatch({
                 type: PRODUCT_LIST_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        }
+    };
+
+export const getAllProducts =
+    (pageNumber = '', productName = '') =>
+    async (dispatch) => {
+        try {
+            dispatch({ type: PRODUCT_LIST_ALL_REQUEST });
+
+            const { data } = await axios.get(
+                `/api/products?pageNumber=${pageNumber}&productName=${productName}`,
+            );
+
+            dispatch({
+                type: PRODUCT_LIST_ALL_SUCCESS,
+                payload: data,
+            });
+        } catch (error) {
+            dispatch({
+                type: PRODUCT_LIST_ALL_FAIL,
                 payload:
                     error.response && error.response.data.message
                         ? error.response.data.message

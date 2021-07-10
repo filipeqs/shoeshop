@@ -22,6 +22,9 @@ import {
     PRODUCT_REVIEW_LIST_ALL_REQUEST,
     PRODUCT_REVIEW_LIST_ALL_SUCCESS,
     PRODUCT_REVIEW_LIST_ALL_FAIL,
+    PRODUCT_LIST_ALL_REQUEST,
+    PRODUCT_LIST_ALL_SUCCESS,
+    PRODUCT_LIST_ALL_FAIL,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -54,6 +57,35 @@ export const productListReducer = (state = { loading: true, products: [] }, acti
                 loading: true,
                 products: [],
                 error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+export const productListAllReducer = (state = { loading: true, products: [] }, action) => {
+    const { payload, type } = action;
+
+    switch (type) {
+        case PRODUCT_LIST_ALL_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case PRODUCT_LIST_ALL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                products: payload.products,
+                pages: payload.pages,
+                page: payload.page,
+            };
+        case PRODUCT_LIST_ALL_FAIL:
+            return {
+                ...state,
+                loading: false,
+                products: [],
+                error: payload,
             };
         default:
             return state;

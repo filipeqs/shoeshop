@@ -17,33 +17,34 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 
-import { listUsers } from '../redux/actions/userActions';
+import { getAllProducts } from '../redux/actions/productActions';
 
-const AdminUserListScreen = ({ history, match }) => {
+const AdminProductListScreen = ({ history, match }) => {
     const dispatch = useDispatch();
-    const [searchUserName, setSearchUserName] = useState('');
+    const [productSearch, setProductSearch] = useState('');
 
-    const { userInfo } = useSelector((state) => state.userLogin);
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
 
-    const userList = useSelector((state) => state.userList);
-    const { loading, error, users, page, pages } = userList;
+    const productListAll = useSelector((state) => state.productListAll);
+    const { loading, error, products, page, pages } = productListAll;
 
     const pageNumber = match.params.pageNumber || 1;
-    const userName = match.params.userName || '';
+    const productName = match.params.productName || '';
 
     useEffect(() => {
         if (!userInfo) history.push('/login');
         else if (!userInfo.isAdmin) history.push('/');
-        else dispatch(listUsers(pageNumber, userName));
-    }, [dispatch, history, userInfo, pageNumber, userName]);
+        else dispatch(getAllProducts(pageNumber, productName));
+    }, [dispatch, history, userInfo, pageNumber, productName]);
 
-    const handleSearchUser = () => {
-        history.push(`/admin/userlist/search/${searchUserName}`);
+    const handleSearchProduct = () => {
+        history.push(`/admin/productlist/search/${productSearch}`);
     };
 
     const handleClearSeach = () => {
-        history.push('/admin/userlist');
-        setSearchUserName('');
+        history.push('/admin/productlist');
+        setProductSearch('');
     };
 
     return (
@@ -55,28 +56,28 @@ const AdminUserListScreen = ({ history, match }) => {
                 <LinkContainer to="/admin">
                     <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
                 </LinkContainer>
-                <Breadcrumb.Item active>All Users</Breadcrumb.Item>
+                <Breadcrumb.Item active>All Products</Breadcrumb.Item>
             </Breadcrumb>
             {loading ? (
                 <Loader />
             ) : (
                 <Fragment>
-                    <h3>All Users</h3>
+                    <h3>All Products</h3>
                     {error && <Message variant="danger">{error}</Message>}
                     <InputGroup className="mb-3">
                         <FormControl
-                            placeholder="Search User by Name"
-                            aria-label="Search User by Name"
+                            placeholder="Search by Order ID"
+                            aria-label="Search by Order ID"
                             aria-describedby="basic-addon2"
-                            value={searchUserName}
-                            onChange={(e) => setSearchUserName(e.target.value)}
+                            value={productSearch}
+                            onChange={(e) => setProductSearch(e.target.value)}
                         />
                         <InputGroup.Append>
                             <Button
                                 variant="outline-dark"
                                 className="btn-sm"
-                                onClick={handleSearchUser}
-                                disabled={!searchUserName}
+                                onClick={handleSearchProduct}
+                                disabled={!productSearch}
                             >
                                 <i className="fas fa-search pr-4 pl-4"></i>
                             </Button>
@@ -89,30 +90,30 @@ const AdminUserListScreen = ({ history, match }) => {
                             Clear Search
                         </Button>
                     </InputGroup>
-                    {users.length === 0 ? (
-                        <Message>No users</Message>
+                    {products.length === 0 ? (
+                        <Message>No products</Message>
                     ) : (
                         <Fragment>
-                            {users.map((user) => (
-                                <ListGroup key={user._id} className="mt-4">
+                            {products.map((product) => (
+                                <ListGroup key={product._id} className="mt-4">
                                     <ListGroup.Item>
                                         <Row>
                                             <Col md={3}>
                                                 <h5>Name</h5>
-                                                <div>{user.name}</div>
+                                                <div>{product.name}</div>
                                             </Col>
                                             <Col md={3}>
-                                                <h5>Email</h5>
-                                                <div>{user.email}</div>
+                                                <h5>Brand</h5>
+                                                <div>{product.brand}</div>
                                             </Col>
                                             <Col md={3}>
-                                                <h5>Admin</h5>
-                                                <div>{user.isAdmin ? 'YES' : 'NO'}</div>
+                                                <h5>Price</h5>
+                                                <div>${product.price}</div>
                                             </Col>
                                             <Col md={3} className="float-right">
                                                 <div className="float-right">
-                                                    <h5>User# {user._id}</h5>
-                                                    <Link to={`/`}>Edit User</Link>
+                                                    <h5>Product# {product._id}</h5>
+                                                    <Link to={`/`}>Edit Product</Link>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -123,9 +124,9 @@ const AdminUserListScreen = ({ history, match }) => {
                                 page={page}
                                 pages={pages}
                                 link={
-                                    userName
-                                        ? `/admin/userlist/search/${userName}`
-                                        : '/admin/userlist'
+                                    productName
+                                        ? `/admin/productlist/search/${productName}`
+                                        : '/admin/productlist'
                                 }
                             />
                         </Fragment>
@@ -136,4 +137,4 @@ const AdminUserListScreen = ({ history, match }) => {
     );
 };
 
-export default AdminUserListScreen;
+export default AdminProductListScreen;

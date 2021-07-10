@@ -37,6 +37,16 @@ const getProducts = async (req, res, next) => {
               }
             : { ...keyword };
 
+        keyword = req.query.productName
+            ? {
+                  ...keyword,
+                  name: {
+                      $regex: req.query.productName,
+                      $options: 'i',
+                  },
+              }
+            : { ...keyword };
+
         const count = await Product.countDocuments({ ...keyword });
         const products = await Product.find({ ...keyword })
             .limit(pageSize)

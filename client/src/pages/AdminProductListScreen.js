@@ -1,6 +1,15 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Breadcrumb, Container, InputGroup, FormControl, Button, Table } from 'react-bootstrap';
+import {
+    Breadcrumb,
+    Container,
+    InputGroup,
+    FormControl,
+    Button,
+    Table,
+    Row,
+    Col,
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -56,13 +65,25 @@ const AdminProductListScreen = ({ history, match }) => {
                 <LinkContainer to="/admin">
                     <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
                 </LinkContainer>
-                <Breadcrumb.Item active>All Products</Breadcrumb.Item>
+                <Breadcrumb.Item active>Products</Breadcrumb.Item>
             </Breadcrumb>
             {loading ? (
                 <Loader />
             ) : (
                 <Fragment>
-                    <h3>All Products</h3>
+                    <Row className="align-items-center">
+                        <Col>
+                            <h3>All Products</h3>
+                        </Col>
+                        <Col className="text-right">
+                            <Button
+                                className="my-3"
+                                onClick={() => history.push('/admin/product/create')}
+                            >
+                                <i className="fas fa-plus"></i> Create Product
+                            </Button>
+                        </Col>
+                    </Row>
                     {error && <Message variant="danger">{error}</Message>}
                     {loadingDelete && <Loader />}
                     {errorDelete && <Message variant="danger">{errorDelete}</Message>}

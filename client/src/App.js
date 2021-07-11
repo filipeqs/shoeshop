@@ -18,6 +18,7 @@ import AdminScreen from './pages/AdminScreen';
 import AdminOrderListScreen from './pages/AdminOrderListScreen';
 import AdminUserListScreen from './pages/AdminUserListScreen';
 import AdminProductListScreen from './pages/AdminProductListScreen';
+import AdminProductCreateScreen from './pages/AdminProductCreateScreen';
 
 const App = () => {
     return (
@@ -45,6 +46,7 @@ const App = () => {
                 path="/admin/userlist/search/:userName/:pageNumber"
                 component={AdminUserListScreen}
             />
+            <Route exact path="/admin/product/create" component={AdminProductCreateScreen} />
             <Route exact path="/admin/productlist" component={AdminProductListScreen} />
             <Route exact path="/admin/productlist/:pageNumber" component={AdminProductListScreen} />
             <Route

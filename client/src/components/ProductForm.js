@@ -6,13 +6,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
-const ProductForm = ({ error, loading, submitHandler }) => {
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [brand, setBrand] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState(0);
-    const [stock, setStock] = useState([{ count: '', size: '', _id: uuidv4() }]);
+const ProductForm = ({ error, loading, submitHandler, product, update }) => {
+    const [name, setName] = useState(product ? product.name : '');
+    const [image, setImage] = useState(product ? product.image : '');
+    const [brand, setBrand] = useState(product ? product.brand : '');
+    const [description, setDescription] = useState(product ? product.description : '');
+    const [price, setPrice] = useState(product ? product.price : 0);
+    const [stock, setStock] = useState(
+        product ? product.stock : [{ count: '', size: '', _id: uuidv4() }],
+    );
     const [uploading, setUploading] = useState(false);
 
     const addNewSize = () => setStock([...stock, { count: '', size: '', _id: uuidv4() }]);
@@ -175,7 +177,7 @@ const ProductForm = ({ error, loading, submitHandler }) => {
             </Form.Group>
 
             <Button type="submit" variant="primary">
-                Create
+                {update ? 'Update' : 'Create'}
             </Button>
         </Form>
     );

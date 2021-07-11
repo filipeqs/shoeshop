@@ -28,6 +28,10 @@ import {
     PRODUCT_DELETE_REQUEST,
     PRODUCT_DELETE_SUCCESS,
     PRODUCT_DELETE_FAIL,
+    PRODUCT_CREATE_REQUEST,
+    PRODUCT_CREATE_SUCCESS,
+    PRODUCT_CREATE_FAIL,
+    PRODUCT_CREATE_RESET,
 } from '../constants/productConstants';
 
 export const productListReducer = (state = { loading: true, products: [] }, action) => {
@@ -117,6 +121,43 @@ export const productDetailsReducer = (state = { product: { stock: [], reviews: [
                 ...state,
                 loading: false,
                 error: payload,
+            };
+        default:
+            return state;
+    }
+};
+
+export const productCreateReducer = (state = {}, action) => {
+    const { payload, type } = action;
+
+    switch (type) {
+        case PRODUCT_CREATE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                success: false,
+                product: null,
+            };
+        case PRODUCT_CREATE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: true,
+                product: payload,
+            };
+        case PRODUCT_CREATE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                success: false,
+                error: payload,
+            };
+        case PRODUCT_CREATE_RESET:
+            return {
+                ...state,
+                loading: false,
+                success: false,
+                product: null,
             };
         default:
             return state;

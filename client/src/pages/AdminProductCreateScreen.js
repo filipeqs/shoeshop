@@ -6,6 +6,11 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import Message from '../components/Message';
+
+import { createProduct } from '../redux/actions/productActions';
+import { PRODUCT_CREATE_RESET } from '../redux/constants/productConstants';
+
 const AdminProductCreateScreen = ({ history }) => {
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
@@ -20,15 +25,38 @@ const AdminProductCreateScreen = ({ history }) => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
+    const productCreate = useSelector((state) => state.productCreate);
+    const { loading, error, success, product } = productCreate;
+
     useEffect(() => {
         if (!userInfo) history.push('/login');
         else if (!userInfo.isAdmin) history.push('/');
-    }, [dispatch, history, userInfo]);
+        else if (success && product) history.push(`/product/${product._id}`);
+    }, [dispatch, history, userInfo, success, product]);
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: PRODUCT_CREATE_RESET });
+        };
+    }, [dispatch]);
 
     const addNewSize = () => setStock([...stock, { count: '', size: '', _id: uuidv4() }]);
 
     const submitHandler = (e) => {
         e.preventDefault();
+        dispatch(
+            createProduct({
+                name,
+                image,
+                brand,
+                description,
+                price,
+                stock: stock.map(({ count, size }) => ({
+                    count,
+                    size,
+                })),
+            }),
+        );
     };
 
     const uploadFileHandler = async (e) => {
@@ -68,12 +96,15 @@ const AdminProductCreateScreen = ({ history }) => {
                 <Breadcrumb.Item active>Create</Breadcrumb.Item>
             </Breadcrumb>
             <Form onSubmit={submitHandler}>
+                {error && <Message variant="danger">{error}</Message>}
+                {loading && <Loader />}
                 <Form.Group controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         type="name"
                         placeholder="Enter Name"
                         value={name}
+                        required
                         onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
@@ -83,6 +114,7 @@ const AdminProductCreateScreen = ({ history }) => {
                         type="number"
                         placeholder="Enter price"
                         value={price}
+                        required
                         onChange={(e) => setPrice(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
@@ -93,6 +125,7 @@ const AdminProductCreateScreen = ({ history }) => {
                         type="text"
                         placeholder="Enter image URL"
                         value={image}
+                        required
                         onChange={(e) => setImage(e.target.value)}
                     ></Form.Control>
                     <Form.File
@@ -110,6 +143,7 @@ const AdminProductCreateScreen = ({ history }) => {
                         type="text"
                         placeholder="Enter brand"
                         value={brand}
+                        required
                         onChange={(e) => setBrand(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
@@ -124,6 +158,7 @@ const AdminProductCreateScreen = ({ history }) => {
                                         type="number"
                                         placeholder="Enter count in stock"
                                         value={count}
+                                        required
                                         onChange={(e) =>
                                             setStock(
                                                 stock.map((item) =>
@@ -141,6 +176,7 @@ const AdminProductCreateScreen = ({ history }) => {
                                         type="number"
                                         placeholder="Enter Size"
                                         value={size}
+                                        required
                                         onChange={(e) =>
                                             setStock(
                                                 stock.map((item) =>
@@ -166,12 +202,13 @@ const AdminProductCreateScreen = ({ history }) => {
                         type="text"
                         placeholder="Enter description"
                         value={description}
+                        required
                         onChange={(e) => setDescription(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 
                 <Button type="submit" variant="primary">
-                    Update
+                    Create
                 </Button>
             </Form>
         </Container>

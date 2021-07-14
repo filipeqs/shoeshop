@@ -73,6 +73,21 @@ const getUserProfile = async (req, res, next) => {
     }
 };
 
+// @desc    Get User By ID
+// @route   POST api/users/:id
+// @access  Private
+const getUserById = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+
+        if (!user) throw new NotFound('User not found');
+
+        return res.send(user);
+    } catch (error) {
+        next(error);
+    }
+};
+
 // @desc    Get all Users
 // @route   Get api/users
 // @access  Private/Admin
@@ -190,6 +205,7 @@ const deleteUserById = async (req, res, next) => {
 module.exports = {
     registerUser,
     authUser,
+    getUserById,
     getUserProfile,
     deleteMyProfile,
     deleteUserById,

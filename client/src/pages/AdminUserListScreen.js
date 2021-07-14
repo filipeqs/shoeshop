@@ -1,15 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Breadcrumb,
-    Container,
-    InputGroup,
-    FormControl,
-    Button,
-    Row,
-    Col,
-    ListGroup,
-} from 'react-bootstrap';
+import { Breadcrumb, Container, InputGroup, FormControl, Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -55,7 +46,7 @@ const AdminUserListScreen = ({ history, match }) => {
                 <LinkContainer to="/admin">
                     <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
                 </LinkContainer>
-                <Breadcrumb.Item active>All Users</Breadcrumb.Item>
+                <Breadcrumb.Item active>Users</Breadcrumb.Item>
             </Breadcrumb>
             {loading ? (
                 <Loader />
@@ -93,32 +84,41 @@ const AdminUserListScreen = ({ history, match }) => {
                         <Message>No users</Message>
                     ) : (
                         <Fragment>
-                            {users.map((user) => (
-                                <ListGroup key={user._id} className="mt-4">
-                                    <ListGroup.Item>
-                                        <Row>
-                                            <Col md={3}>
-                                                <h5>Name</h5>
-                                                <div>{user.name}</div>
-                                            </Col>
-                                            <Col md={3}>
-                                                <h5>Email</h5>
-                                                <div>{user.email}</div>
-                                            </Col>
-                                            <Col md={3}>
-                                                <h5>Admin</h5>
-                                                <div>{user.isAdmin ? 'YES' : 'NO'}</div>
-                                            </Col>
-                                            <Col md={3} className="float-right">
-                                                <div className="float-right">
-                                                    <h5>User# {user._id}</h5>
-                                                    <Link to={`/`}>Edit User</Link>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                </ListGroup>
-                            ))}
+                            <Table bordered hover responsive className="table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NAME</th>
+                                        <th>EMAIL</th>
+                                        <th>ADMIN</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {users.map((user) => (
+                                        <tr key={user._id}>
+                                            <td>{user._id}</td>
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                            <td>
+                                                {user.isAdmin ? (
+                                                    <i className="fas fa-check"></i>
+                                                ) : (
+                                                    <i className="fas fa-times"></i>
+                                                )}
+                                            </td>
+                                            <td className="d-flex justify-content-around align-items-center">
+                                                <Link
+                                                    to={`/admin/user/${user._id}/edit`}
+                                                    className="mr-2"
+                                                >
+                                                    <i className="fas fa-edit"></i>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
                             <Paginate
                                 page={page}
                                 pages={pages}

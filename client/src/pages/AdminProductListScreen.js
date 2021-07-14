@@ -117,7 +117,7 @@ const AdminProductListScreen = ({ history, match }) => {
                         <Message>No products</Message>
                     ) : (
                         <Fragment>
-                            <Table striped bordered hover responsive className="table-sm">
+                            <Table bordered hover responsive className="table-sm">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

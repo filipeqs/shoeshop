@@ -13,13 +13,14 @@ import ReviewProductScreen from './pages/ReviewProductScreen';
 import Footer from './layout/Footer';
 import ProductBrandScreen from './pages/ProductBrandScreen';
 import ProfileScreen from './pages/ProfileScreen';
-import EditProfileScreen from './pages/EditProfileScreen';
+import ProfileEditScreen from './pages/ProfileEditScreen';
 import AdminScreen from './pages/AdminScreen';
 import AdminOrderListScreen from './pages/AdminOrderListScreen';
 import AdminUserListScreen from './pages/AdminUserListScreen';
 import AdminProductListScreen from './pages/AdminProductListScreen';
 import AdminProductCreateScreen from './pages/AdminProductCreateScreen';
 import AdminProductEditScreen from './pages/AdminProductEditScreen';
+import AdminUserEditScreen from './pages/AdminUserEditScreen';
 
 const App = () => {
     return (
@@ -35,10 +36,11 @@ const App = () => {
             <Route path="/cart" component={CartScreen} />
             <Route path="/checkout" component={CheckoutScreen} />
             <Route exact path="/profile" component={ProfileScreen} />
-            <Route exact path="/profile/edit" component={EditProfileScreen} />
+            <Route exact path="/profile/edit" component={ProfileEditScreen} />
             <Route exact path="/orders" component={OrderListScreen} />
             <Route exact path="/orders/:id" component={OrderScreen} />
             <Route exact path="/admin" component={AdminScreen} />
+            <Route exact path="/admin/user/:id/edit" component={AdminUserEditScreen} />
             <Route exact path="/admin/userlist" component={AdminUserListScreen} />
             <Route exact path="/admin/userlist/:pageNumber" component={AdminUserListScreen} />
             <Route exact path="/admin/userlist/search/:userName" component={AdminUserListScreen} />

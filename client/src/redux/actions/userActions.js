@@ -17,6 +17,9 @@ import {
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
     USER_LIST_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
 } from '../constants/userConstants';
 import { setAlert } from './alertActions';
 
@@ -146,6 +149,40 @@ export const updateUserProfileDetails = (user) => async (dispatch, getState) => 
     } catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const updateUser = (user, id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: USER_UPDATE_REQUEST });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Contet-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.put(`/api/users/${id}`, user, config);
+
+        dispatch({
+            type: USER_UPDATE_SUCCESS,
+            payload: data,
+        });
+
+        dispatch(setAlert('User Updated', 'success'));
+    } catch (error) {
+        dispatch({
+            type: USER_UPDATE_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

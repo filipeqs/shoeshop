@@ -18,6 +18,10 @@ import {
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
     USER_LIST_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_RESET,
 } from '../constants/userConstants';
 
 const userFromStorage = localStorage.getItem('userInfo')
@@ -145,6 +149,39 @@ export const userUpdateProfileReducer = (state = {}, action) => {
                 error: payload,
             };
         case USER_UPDATE_PROFILE_RESET:
+            return {
+                ...state,
+                loading: false,
+                success: false,
+            };
+        default:
+            return state;
+    }
+};
+
+export const userUpdateReducer = (state = {}, action) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case USER_UPDATE_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case USER_UPDATE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: true,
+                userInfo: payload,
+            };
+        case USER_UPDATE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: payload,
+            };
+        case USER_UPDATE_RESET:
             return {
                 ...state,
                 loading: false,

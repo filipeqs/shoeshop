@@ -34,10 +34,6 @@ const Header = () => {
 
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
-                            <LinkContainer to="/product/releases">
-                                <Nav.Link>Releases</Nav.Link>
-                            </LinkContainer>
-
                             <NavDropdown title="brand" id="brand">
                                 <LinkContainer to="/product/brand/adidas">
                                     <NavDropdown.Item>Adidas</NavDropdown.Item>

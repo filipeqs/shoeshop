@@ -27,10 +27,11 @@ app.use('/api/upload', uploadRoutes);
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '/client/build')));
+    console.log('a');
+    app.use(express.static(path.join(path.resolve(), '/client/build')));
 
     app.get('*', (req, res) =>
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')),
+        res.sendFile(path.resolve(path.resolve(), 'client', 'build', 'index.html')),
     );
 } else {
     app.get('/', (req, res) => res.send('API is running'));

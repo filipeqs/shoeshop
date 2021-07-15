@@ -26,6 +26,8 @@ app.use('/api/upload', uploadRoutes);
 
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
+app.use('/uploads', express.static(path.join(path.resolve(), '/client/public/images/')));
+
 if (process.env.NODE_ENV === 'production') {
     console.log('a');
     app.use(express.static(path.join(path.resolve(), '/client/build')));

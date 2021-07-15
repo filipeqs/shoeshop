@@ -6,7 +6,7 @@ const users = require('../data/user');
 const products = require('../data/products');
 
 const Address = require('../models/addressModel');
-const Order = require('../models/orderMode');
+const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const Review = require('../models/reviewModel');
 const User = require('../models/userModel');
